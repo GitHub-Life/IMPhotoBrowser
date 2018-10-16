@@ -21,6 +21,6 @@ typedef void(^IMPBPhotoBrowsePageChangedEvent)(NSInteger page);
 typedef void(^IMPBPhotoBrowseSingleTapEvent)(void);
 @class UIView;
 typedef UIView *(^IMPBAnimationViewBlock)(NSInteger index);
-#define IMPBTailViewTag 99999
+typedef NSValue *(^IMPBAnimationRectBlock)(NSInteger index);
 
 #endif /* IMPBStatement_h */

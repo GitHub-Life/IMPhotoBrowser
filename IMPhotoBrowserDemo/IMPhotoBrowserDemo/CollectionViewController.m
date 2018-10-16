@@ -55,7 +55,7 @@ static NSString * const reuseIdentifier = @"Cell";
     IMPhotoPickerContainerViewController *photoPickerContainerVC = [[IMPhotoPickerContainerViewController alloc] initWithChoosePhotoMaxCount:9 selectEvent:^(NSArray<IMPhoto *> *photoArray) {
         weakSelf.photoArray = photoArray;
     }];
-    [self presentViewController:photoPickerContainerVC.naviVC animated:YES completion:nil];
+    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:photoPickerContainerVC] animated:YES completion:nil];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {

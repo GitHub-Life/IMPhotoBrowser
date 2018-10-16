@@ -58,7 +58,7 @@ static NSString * const CellIdentifier = @"IMPhotoCollectionViewCell";
 }
 
 - (void)initView {
-    self.collectionView.backgroundColor = UIColor.groupTableViewBackgroundColor;
+    self.collectionView.backgroundColor = UIColor.clearColor;
     [self.collectionView registerNib:[UINib nibWithNibName:CellIdentifier bundle:nil] forCellWithReuseIdentifier:CellIdentifier];
 }
 
@@ -108,28 +108,20 @@ static NSString * const CellIdentifier = @"IMPhotoCollectionViewCell";
     IMPhotoBrowserViewController *browserVC = [[IMPhotoBrowserViewController alloc] initWithPhotoArray:self.photoArray.copy currentIndex:indexPath.row - 1 maxCount:self.maxCount];
     [browserVC setPhotoSelectEvent:_photoSelectEvent];
     [browserVC setBrowseFinish:self.browseFinish];
-    [browserVC.animationTransitioning setOrginalViewBlock:^UIView *(NSInteger index) {
+    [browserVC.animationTransitioning setOriginalViewRectBlock:^NSValue *(NSInteger index) {
         NSInteger targetIndex = index + 1;
-        UIView *view = [weakSelf.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:targetIndex inSection:0]];
-        NSArray<NSIndexPath *> *visibleIndexPaths = [[weakSelf.collectionView indexPathsForVisibleItems] sortedArrayUsingComparator:^NSComparisonResult(NSIndexPath *obj1, NSIndexPath *obj2) {
-            return obj1.row - obj2.row;
-        }];
-        if (targetIndex < visibleIndexPaths.firstObject.row) {
-            view = [[UIView alloc] init];
-        } else if (targetIndex > visibleIndexPaths.lastObject.row) {
-            view = [[UIView alloc] init];
-            view.tag = IMPBTailViewTag;
-        }
-        return view;
+        UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)weakSelf.collectionViewLayout;
+        NSInteger line = targetIndex / ColumnCount;
+        NSInteger column = targetIndex % ColumnCount;
+        CGFloat x = column * (flowLayout.itemSize.width + flowLayout.minimumInteritemSpacing);
+        CGFloat y = line * (flowLayout.itemSize.height + flowLayout.minimumLineSpacing);
+        CGRect frame = [weakSelf.collectionView convertRect:CGRectMake(x, y, flowLayout.itemSize.width, flowLayout.itemSize.height) toView:UIApplication.sharedApplication.keyWindow];
+        return [NSValue valueWithCGRect:frame];
+    }];
+    [browserVC.animationTransitioning setOriginalViewBlock:^UIView *(NSInteger index) {
+        return [weakSelf.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:index + 1 inSection:0]];
     }];
     [self presentViewController:browserVC animated:YES completion:nil];
-}
-
-#pragma mark - UIScrollView Delegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (scrollView.contentOffset.y <= 0) {
-        [scrollView setContentOffset:CGPointZero];
-    }
 }
 
 @end

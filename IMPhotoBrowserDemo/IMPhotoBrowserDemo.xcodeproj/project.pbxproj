@@ -33,7 +33,6 @@
 		B73977E92175B6550052B7CF /* IMPhotoBrowserHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977C92175B6550052B7CF /* IMPhotoBrowserHeaderView.m */; };
 		B73977EA2175B6550052B7CF /* IMPhotoBrowserCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977CC2175B6550052B7CF /* IMPhotoBrowserCollectionViewCell.m */; };
 		B73977EB2175B6550052B7CF /* IMPhotoBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977CE2175B6550052B7CF /* IMPhotoBrowserViewController.m */; };
-		B73977EC2175B6550052B7CF /* IMPresentListAnimationTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977D12175B6550052B7CF /* IMPresentListAnimationTransitioning.m */; };
 		B73977ED2175B6550052B7CF /* IMPhotoBrowserAnimationTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977D52175B6550052B7CF /* IMPhotoBrowserAnimationTransitioning.m */; };
 		B73977EE2175B6550052B7CF /* IMBaseAnimationTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977D82175B6550052B7CF /* IMBaseAnimationTransitioning.m */; };
 		B75C88962171EAD7004531AC /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75C88952171EAD7004531AC /* CollectionViewController.m */; };
@@ -90,8 +89,6 @@
 		B73977CC2175B6550052B7CF /* IMPhotoBrowserCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMPhotoBrowserCollectionViewCell.m; sourceTree = "<group>"; };
 		B73977CD2175B6550052B7CF /* IMPhotoBrowserCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMPhotoBrowserCollectionViewCell.h; sourceTree = "<group>"; };
 		B73977CE2175B6550052B7CF /* IMPhotoBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMPhotoBrowserViewController.m; sourceTree = "<group>"; };
-		B73977D12175B6550052B7CF /* IMPresentListAnimationTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMPresentListAnimationTransitioning.m; sourceTree = "<group>"; };
-		B73977D22175B6550052B7CF /* IMPresentListAnimationTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMPresentListAnimationTransitioning.h; sourceTree = "<group>"; };
 		B73977D42175B6550052B7CF /* IMPhotoBrowserAnimationTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMPhotoBrowserAnimationTransitioning.h; sourceTree = "<group>"; };
 		B73977D52175B6550052B7CF /* IMPhotoBrowserAnimationTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMPhotoBrowserAnimationTransitioning.m; sourceTree = "<group>"; };
 		B73977D72175B6550052B7CF /* IMBaseAnimationTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMBaseAnimationTransitioning.h; sourceTree = "<group>"; };
@@ -221,6 +218,7 @@
 		B73977A22175B6550052B7CF /* VM */ = {
 			isa = PBXGroup;
 			children = (
+				B739783D2175C9410052B7CF /* AnimationTransitioning */,
 				B73977A32175B6550052B7CF /* IMPBStatement.h */,
 				B73977A42175B6550052B7CF /* PhotoManager */,
 			);
@@ -367,30 +365,10 @@
 		B73977CF2175B6550052B7CF /* IMTransitionAnimation */ = {
 			isa = PBXGroup;
 			children = (
-				B73977D02175B6550052B7CF /* Present */,
-				B73977D32175B6550052B7CF /* PhotoBrowser */,
 				B73977D62175B6550052B7CF /* Base */,
 			);
 			name = IMTransitionAnimation;
 			path = ../../IMTransitionAnimation;
-			sourceTree = "<group>";
-		};
-		B73977D02175B6550052B7CF /* Present */ = {
-			isa = PBXGroup;
-			children = (
-				B73977D12175B6550052B7CF /* IMPresentListAnimationTransitioning.m */,
-				B73977D22175B6550052B7CF /* IMPresentListAnimationTransitioning.h */,
-			);
-			path = Present;
-			sourceTree = "<group>";
-		};
-		B73977D32175B6550052B7CF /* PhotoBrowser */ = {
-			isa = PBXGroup;
-			children = (
-				B73977D42175B6550052B7CF /* IMPhotoBrowserAnimationTransitioning.h */,
-				B73977D52175B6550052B7CF /* IMPhotoBrowserAnimationTransitioning.m */,
-			);
-			path = PhotoBrowser;
 			sourceTree = "<group>";
 		};
 		B73977D62175B6550052B7CF /* Base */ = {
@@ -400,6 +378,15 @@
 				B73977D82175B6550052B7CF /* IMBaseAnimationTransitioning.m */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		B739783D2175C9410052B7CF /* AnimationTransitioning */ = {
+			isa = PBXGroup;
+			children = (
+				B73977D42175B6550052B7CF /* IMPhotoBrowserAnimationTransitioning.h */,
+				B73977D52175B6550052B7CF /* IMPhotoBrowserAnimationTransitioning.m */,
+			);
+			path = AnimationTransitioning;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -542,7 +529,6 @@
 				B73977EB2175B6550052B7CF /* IMPhotoBrowserViewController.m in Sources */,
 				B73977DD2175B6550052B7CF /* IMPhotoManager.m in Sources */,
 				B73977EA2175B6550052B7CF /* IMPhotoBrowserCollectionViewCell.m in Sources */,
-				B73977EC2175B6550052B7CF /* IMPresentListAnimationTransitioning.m in Sources */,
 				B73977E22175B6550052B7CF /* IMPBSelectedStateButton.m in Sources */,
 				B73977E62175B6550052B7CF /* IMPhotoAlbumTableViewCell.m in Sources */,
 				B73977DB2175B6550052B7CF /* UIViewController+IMAlert.m in Sources */,

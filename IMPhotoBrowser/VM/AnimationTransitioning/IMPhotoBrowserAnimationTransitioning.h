@@ -16,10 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *animSnapshoot;
 @property (nonatomic, strong) UIView *animBgView;
 
-/** Present动画起始View(反之：Dismiss动画终点View) */
-@property (nonatomic, strong) IMPBAnimationViewBlock orginalViewBlock;
+@property (nonatomic, strong) IMPBAnimationRectBlock originalViewRectBlock;
 
-/** Present动画终点View(反之：Dismiss动画起始View) */
+@property (nonatomic, strong) IMPBAnimationViewBlock originalViewBlock;
+
 @property (nonatomic, strong) IMPBAnimationViewBlock targetViewBlock;
 
 @property (nonatomic, assign) NSInteger currentIndex;

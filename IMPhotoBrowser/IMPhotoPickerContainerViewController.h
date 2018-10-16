@@ -16,8 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithChoosePhotoMaxCount:(NSInteger)maxCount selectEvent:(IMPBPhotoArraySelectEvent)selectEvent;
 
-- (UINavigationController *)naviVC;
-
 @end
 
 NS_ASSUME_NONNULL_END

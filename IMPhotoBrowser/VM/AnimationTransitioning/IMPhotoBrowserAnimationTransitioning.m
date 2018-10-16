@@ -13,21 +13,17 @@
 @property (nonatomic, assign) CGPoint startPoint;
 @property (nonatomic, assign) CGFloat animPercent;
 
+@property (nonatomic, weak) UIView *originalView;
+
 @end
 
 @implementation IMPhotoBrowserAnimationTransitioning
 
 #pragma mark - present 动画
 - (void)presentAnimateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
-    UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+//    UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     UIView *containerView = [transitionContext containerView];
-    
-    UIView *presentingSnapshot = [fromVC.view snapshotViewAfterScreenUpdates:YES];
-    presentingSnapshot.tag = 100;
-    presentingSnapshot.frame = fromVC.view.frame;
-    fromVC.view.hidden = YES;
-    [containerView addSubview:presentingSnapshot];
     
     [containerView addSubview:toVC.view];
     toVC.view.alpha = 0.f;
@@ -43,29 +39,28 @@
 #pragma mark - dismiss 动画
 - (void)dismissAnimateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
     UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-    UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-    UIView *containerView = [transitionContext containerView];
+//    UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+//    UIView *containerView = [transitionContext containerView];
     
-    UIView *presentingSnapshot = [containerView viewWithTag:100];
-    UIView *originalView = self.orginalViewBlock(_currentIndex);
-    CGRect originalFrame = [originalView convertRect:originalView.bounds toView:containerView];
-    if (originalView.tag == IMPBTailViewTag) {
-        originalFrame = CGRectMake(CGRectGetWidth(containerView.bounds), CGRectGetHeight(containerView.bounds), 0, 0);
-    }
-    __weak typeof(self) weakSelf = self;
+    CGRect originalFrame = [self.originalViewRectBlock(_currentIndex) CGRectValue];
     [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.05 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         fromVC.view.alpha = 0.f;
-        weakSelf.animSnapshoot.frame = originalFrame;
-        weakSelf.animBgView.alpha = 0.f;
+        if (CGRectIsEmpty(originalFrame)) {
+            CGAffineTransform transform = self.animSnapshoot.transform;
+            self.animSnapshoot.transform = CGAffineTransformMake(0.1f, transform.b, transform.c, 0.1f, transform.tx, transform.ty);
+            self.animSnapshoot.alpha = 0.f;
+        } else {
+            self.animSnapshoot.frame = originalFrame;
+        }
+        self.animBgView.alpha = 0.f;
     } completion:^(BOOL finished) {
         if ([transitionContext transitionWasCancelled]) {
             [transitionContext completeTransition:NO];
         } else {
             [transitionContext completeTransition:YES];
-            toVC.view.hidden = NO;
-            [presentingSnapshot removeFromSuperview];
-            [weakSelf.animSnapshoot removeFromSuperview];
-            [weakSelf.animBgView removeFromSuperview];
+            [self.animSnapshoot removeFromSuperview];
+            [self.animBgView removeFromSuperview];
+            self.originalView.hidden = NO;
         }
     }];
 }
@@ -85,6 +80,8 @@
             [keyWindow addSubview:_animSnapshoot];
             self.dismissVC.view.hidden = YES;
             _startPoint = [panGr locationInView:panGr.view];
+            self.originalView = self.originalViewBlock(self.currentIndex);
+            self.originalView.hidden = YES;
         } break;
         case UIGestureRecognizerStateChanged: {
             CGPoint translation = [panGr translationInView:panGr.view];
@@ -105,6 +102,7 @@
                     self.animSnapshoot.transform = CGAffineTransformIdentity;
                     self.animBgView.alpha = 1.f;
                 } completion:^(BOOL finished) {
+                    self.originalView.hidden = NO;
                     self.dismissVC.view.hidden = NO;
                     [self.animSnapshoot removeFromSuperview];
                     [self.animBgView removeFromSuperview];
@@ -126,13 +124,22 @@
     return _targetViewBlock;
 }
 
-- (IMPBAnimationViewBlock)orginalViewBlock {
-    if (!_orginalViewBlock) {
-        _orginalViewBlock = ^UIView *(NSInteger index){
+- (IMPBAnimationRectBlock)originalViewRectBlock {
+    if (!_originalViewRectBlock) {
+        _originalViewRectBlock = ^NSValue *(NSInteger index){
+            return [NSValue valueWithCGRect:CGRectZero];
+        };
+    }
+    return _originalViewRectBlock;
+}
+
+- (IMPBAnimationViewBlock)originalViewBlock {
+    if (!_originalViewBlock) {
+        _originalViewBlock = ^UIView *(NSInteger index){
             return nil;
         };
     }
-    return _orginalViewBlock;
+    return _originalViewBlock;
 }
 
 #pragma mark - UIGestureRecognizer Delegate

@@ -14,19 +14,15 @@
 #import "IMPhotoCollectionFooterView.h"
 #import "IMPhotoCollectionViewController.h"
 #import "IMPhotoAlbumTableViewController.h"
-#import "IMPresentListAnimationTransitioning.h"
 #import "IMPhotoBrowserViewController.h"
 
 static CGFloat const FooterViewHeight = 44.f;
 
 @interface IMPhotoPickerContainerViewController ()
 
-@property (nonatomic, strong) IMPresentListAnimationTransitioning *animationTransitioning;
-
 @property (nonatomic, assign) NSInteger maxCount;
 @property (nonatomic, strong) IMPBPhotoArraySelectEvent selectEvent;
 @property (nonatomic, strong) NSMutableArray<IMPhoto *> *selectedPhotoArray;
-@property (nonatomic, strong) UIBarButtonItem *completeBarBtn;
 
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong) IMPhotoCollectionFooterView *footerView;
@@ -44,17 +40,6 @@ static CGFloat const FooterViewHeight = 44.f;
 @end
 
 @implementation IMPhotoPickerContainerViewController
-
-- (UINavigationController *)naviVC {
-    UINavigationController *naviVC = [[UINavigationController alloc] initWithRootViewController:self];
-    IMPresentListAnimationTransitioning *animationTransitioning = [[IMPresentListAnimationTransitioning alloc] init];
-    animationTransitioning.topOffset = CGRectGetHeight(UIApplication.sharedApplication.statusBarFrame);
-    animationTransitioning.cornerRadius = 10.f;
-    [animationTransitioning addPanGerstureForTargetView:naviVC.view dismissVC:naviVC];
-    naviVC.transitioningDelegate = animationTransitioning;
-    self.animationTransitioning = animationTransitioning;
-    return naviVC;
-}
 
 #pragma mark - 初始化
 - (instancetype)initWithChoosePhotoMaxCount:(NSInteger)maxCount selectEvent:(nonnull IMPBPhotoArraySelectEvent)selectEvent {
@@ -139,6 +124,7 @@ static CGFloat const FooterViewHeight = 44.f;
     
     _footerView = [[IMPhotoCollectionFooterView alloc] init];
     [_footerView.previewBtn addTarget:self action:@selector(previewSelectedPhotoArray) forControlEvents:UIControlEventTouchUpInside];
+    [_footerView.completeBtn addTarget:self action:@selector(complete) forControlEvents:UIControlEventTouchUpInside];
     [_containerView addSubview:_footerView];
     [_footerView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.leading.mas_equalTo(0);
@@ -154,9 +140,6 @@ static CGFloat const FooterViewHeight = 44.f;
 
 - (void)setNavigationBar {
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancelBack)];
-    self.completeBarBtn = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(complete)];
-    self.completeBarBtn.enabled = NO;
-    self.navigationItem.rightBarButtonItem = self.completeBarBtn;
     [self.navigationController.navigationBar addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(albumTableShowHide)]];
     self.currentCollection = [IMPhotoManager getSmartPhotoAlbumArray].firstObject[IMPBAlbumKey];
     self.navigationItem.title = [NSString stringWithFormat:@"%@ ▼", self.currentCollection.localizedTitle];
@@ -173,12 +156,10 @@ static CGFloat const FooterViewHeight = 44.f;
 #pragma mark - 检查选中的照片数量
 - (NSInteger)checkSelectedPhotoCount {
     NSInteger selectedPhotoCount = self.selectedPhotoArray.count;
-    self.completeBarBtn.enabled = selectedPhotoCount > 0;
+    self.footerView.completeBtn.enabled = selectedPhotoCount > 0;
     self.footerView.previewBtn.enabled = selectedPhotoCount > 0;
-    if (self.completeBarBtn.enabled) {
-        [self.completeBarBtn setTitle:[NSString stringWithFormat:@"完成(%d)", (int)self.selectedPhotoArray.count]];
-    } else {
-        [self.completeBarBtn setTitle:@"完成"];
+    if (self.footerView.completeBtn.enabled) {
+        [self.footerView.completeBtn setTitle:[NSString stringWithFormat:@"完成(%d)", (int)self.selectedPhotoArray.count] forState:UIControlStateNormal];
     }
     self.photoCollectionVC.disableSelectOther = selectedPhotoCount >= self.maxCount;
     return self.selectedPhotoArray.count;
@@ -194,7 +175,6 @@ static CGFloat const FooterViewHeight = 44.f;
         }];
         [_photoCollectionVC setPhotoSelectEvent:self.photoSelectEvent];
         [_photoCollectionVC setBrowseFinish:self.browseFinish];
-        self.animationTransitioning.scrollView = _photoCollectionVC.collectionView;
         [self addChildViewController:_photoCollectionVC];
     }
     return _photoCollectionVC;

@@ -23,6 +23,8 @@
 @property (nonatomic, strong) IMPhotoBrowserHeaderView *headerView;
 @property (nonatomic, strong) IMPBSelectedStateButton *selectedStateBtn;
 
+@property (nonatomic, assign) BOOL completed;
+
 @end
 
 @implementation IMPhotoBrowserViewController
@@ -33,6 +35,7 @@
         self.headerView.currentIndex = currentIndex;
         self.maxCount = maxCount;
         self.transitioningDelegate = self.animationTransitioning;
+        self.modalPresentationStyle = UIModalPresentationCustom;
     }
     return self;
 }
@@ -166,6 +169,7 @@
 #pragma mark - 完成预览
 - (void)complete {
     [self dismissViewControllerAnimated:YES completion:nil];
+    _completed = YES;
     if (_browseFinish) {
         _browseFinish(-100); // <0代表是点击Complete按钮
     }
@@ -174,14 +178,18 @@
 #pragma mark - 关闭预览
 - (void)close {
     [self dismissViewControllerAnimated:YES completion:nil];
-    if (_browseFinish) {
-        _browseFinish(self.collectionView.currentIndex);
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [UIApplication.sharedApplication setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    if (!_completed && _browseFinish) {
+        _browseFinish(self.collectionView.currentIndex);
+    }
 }
      
 @end
