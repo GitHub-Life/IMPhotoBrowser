@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="IMPhotoCollectionViewCell" id="gTV-IL-0wX" customClass="IMPhotoCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qqp-dE-7CB">
+                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7J3-yR-h6R">
+                                <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nnW-kx-w0w" customClass="IMPBSelectedStateButton">
+                                <rect key="frame" x="120" y="0.0" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="nnW-kx-w0w" secondAttribute="height" id="8id-NV-JcF"/>
+                                    <constraint firstAttribute="width" constant="30" id="DqA-1u-lqJ"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="selectBtnClick" destination="gTV-IL-0wX" eventType="touchUpInside" id="q3F-CC-As7"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="nnW-kx-w0w" secondAttribute="trailing" id="0qK-78-RIq"/>
+                            <constraint firstItem="nnW-kx-w0w" firstAttribute="top" secondItem="qqp-dE-7CB" secondAttribute="top" id="8Tm-LS-T8F"/>
+                            <constraint firstAttribute="bottom" secondItem="7J3-yR-h6R" secondAttribute="bottom" id="ZC3-dq-szd"/>
+                            <constraint firstAttribute="trailing" secondItem="7J3-yR-h6R" secondAttribute="trailing" id="bCY-8c-Ctu"/>
+                            <constraint firstItem="7J3-yR-h6R" firstAttribute="top" secondItem="qqp-dE-7CB" secondAttribute="top" id="btL-dO-S5v"/>
+                            <constraint firstItem="7J3-yR-h6R" firstAttribute="leading" secondItem="qqp-dE-7CB" secondAttribute="leading" id="j2m-eg-5Ca"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nFb-4h-jGW">
+                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="qqp-dE-7CB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="3Cj-pH-4NH"/>
+                <constraint firstItem="nFb-4h-jGW" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="GN2-hh-4zb"/>
+                <constraint firstAttribute="bottom" secondItem="nFb-4h-jGW" secondAttribute="bottom" id="LnV-aP-Hr6"/>
+                <constraint firstItem="nFb-4h-jGW" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Tdn-W5-Y6m"/>
+                <constraint firstAttribute="bottom" secondItem="qqp-dE-7CB" secondAttribute="bottom" id="UK8-Su-5Og"/>
+                <constraint firstAttribute="trailing" secondItem="qqp-dE-7CB" secondAttribute="trailing" id="ffe-9Z-BN9"/>
+                <constraint firstItem="qqp-dE-7CB" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="glR-wd-WmV"/>
+                <constraint firstAttribute="trailing" secondItem="nFb-4h-jGW" secondAttribute="trailing" id="uCW-ha-dP9"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="SEy-5g-ep8"/>
+            <size key="customSize" width="164" height="167"/>
+            <connections>
+                <outlet property="imgView" destination="7J3-yR-h6R" id="pqr-pF-9jv"/>
+                <outlet property="maskView" destination="nFb-4h-jGW" id="0pS-Qx-6xb"/>
+                <outlet property="selectBtn" destination="nnW-kx-w0w" id="GR8-YZ-oAI"/>
+            </connections>
+            <point key="canvasLocation" x="228.80000000000001" y="206.89655172413794"/>
+        </collectionViewCell>
+    </objects>
+</document>
