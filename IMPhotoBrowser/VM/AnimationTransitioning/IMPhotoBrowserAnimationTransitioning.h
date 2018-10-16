@@ -16,8 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *animSnapshoot;
 @property (nonatomic, strong) UIView *animBgView;
 
-@property (nonatomic, strong) IMPBAnimationRectBlock originalViewRectBlock;
-
 @property (nonatomic, strong) IMPBAnimationViewBlock originalViewBlock;
 
 @property (nonatomic, strong) IMPBAnimationViewBlock targetViewBlock;

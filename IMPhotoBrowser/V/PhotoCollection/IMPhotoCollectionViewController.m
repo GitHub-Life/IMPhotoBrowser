@@ -108,16 +108,6 @@ static NSString * const CellIdentifier = @"IMPhotoCollectionViewCell";
     IMPhotoBrowserViewController *browserVC = [[IMPhotoBrowserViewController alloc] initWithPhotoArray:self.photoArray.copy currentIndex:indexPath.row - 1 maxCount:self.maxCount];
     [browserVC setPhotoSelectEvent:_photoSelectEvent];
     [browserVC setBrowseFinish:self.browseFinish];
-    [browserVC.animationTransitioning setOriginalViewRectBlock:^NSValue *(NSInteger index) {
-        NSInteger targetIndex = index + 1;
-        UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)weakSelf.collectionViewLayout;
-        NSInteger line = targetIndex / ColumnCount;
-        NSInteger column = targetIndex % ColumnCount;
-        CGFloat x = column * (flowLayout.itemSize.width + flowLayout.minimumInteritemSpacing);
-        CGFloat y = line * (flowLayout.itemSize.height + flowLayout.minimumLineSpacing);
-        CGRect frame = [weakSelf.collectionView convertRect:CGRectMake(x, y, flowLayout.itemSize.width, flowLayout.itemSize.height) toView:UIApplication.sharedApplication.keyWindow];
-        return [NSValue valueWithCGRect:frame];
-    }];
     [browserVC.animationTransitioning setOriginalViewBlock:^UIView *(NSInteger index) {
         return [weakSelf.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:index + 1 inSection:0]];
     }];

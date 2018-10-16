@@ -40,9 +40,9 @@
 - (void)dismissAnimateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
     UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
 //    UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-//    UIView *containerView = [transitionContext containerView];
+    UIView *containerView = [transitionContext containerView];
     
-    CGRect originalFrame = [self.originalViewRectBlock(_currentIndex) CGRectValue];
+    CGRect originalFrame = [self.originalView convertRect:self.originalView.bounds toView:containerView];
     [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.05 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         fromVC.view.alpha = 0.f;
         if (CGRectIsEmpty(originalFrame)) {
@@ -122,15 +122,6 @@
         };
     }
     return _targetViewBlock;
-}
-
-- (IMPBAnimationRectBlock)originalViewRectBlock {
-    if (!_originalViewRectBlock) {
-        _originalViewRectBlock = ^NSValue *(NSInteger index){
-            return [NSValue valueWithCGRect:CGRectZero];
-        };
-    }
-    return _originalViewRectBlock;
 }
 
 - (IMPBAnimationViewBlock)originalViewBlock {
