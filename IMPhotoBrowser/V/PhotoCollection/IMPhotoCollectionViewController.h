@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) NSArray<IMPhoto *> *photoArray;
 
+@property (nonatomic, assign) BOOL allowsEditing;
 @property (nonatomic, strong) IMPBPhotoSelectEvent photoSelectEvent;
 @property (nonatomic, strong) IMPBPhotoBrowseFinishEvent browseFinish;
 

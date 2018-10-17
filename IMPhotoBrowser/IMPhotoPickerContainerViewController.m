@@ -20,8 +20,10 @@ static CGFloat const FooterViewHeight = 44.f;
 
 @interface IMPhotoPickerContainerViewController ()
 
+@property (nonatomic, assign) BOOL allowsEditing;
+@property (nonatomic, strong) IMPBPhotoSelectedEvent singleSelectedEvent;
 @property (nonatomic, assign) NSInteger maxCount;
-@property (nonatomic, strong) IMPBPhotoArraySelectEvent selectEvent;
+@property (nonatomic, strong) IMPBPhotoArraySelectedEvent multiSelectedEvent;
 @property (nonatomic, strong) NSMutableArray<IMPhoto *> *selectedPhotoArray;
 
 @property (nonatomic, strong) UIView *containerView;
@@ -42,10 +44,19 @@ static CGFloat const FooterViewHeight = 44.f;
 @implementation IMPhotoPickerContainerViewController
 
 #pragma mark - 初始化
-- (instancetype)initWithPhotoMaxCount:(NSInteger)maxCount selectEvent:(nonnull IMPBPhotoArraySelectEvent)selectEvent {
+- (instancetype)initWithPhotoMaxCount:(NSInteger)maxCount multiSelectedEvent:(nonnull IMPBPhotoArraySelectedEvent)multiSelectedEvent {
     if (self = [super init]) {
         self.maxCount = maxCount;
-        self.selectEvent = selectEvent;
+        self.multiSelectedEvent = multiSelectedEvent;
+    }
+    return self;
+}
+
+- (instancetype)initWithCutedSelectedEvent:(IMPBPhotoSelectedEvent)singleSelectedEvent {
+    if (self = [super init]) {
+        self.maxCount = 1;
+        self.allowsEditing = YES;
+        self.singleSelectedEvent = singleSelectedEvent;
     }
     return self;
 }
@@ -70,8 +81,15 @@ static CGFloat const FooterViewHeight = 44.f;
         __weak typeof(self) weakSelf = self;
         _photoSelectEvent = ^NSInteger(IMPhoto *photo) {
             if (photo.isTakePhoto) {
-                [weakSelf.selectedPhotoArray addObject:photo];
-                [weakSelf complete];
+                if (weakSelf.allowsEditing) {
+                    if (weakSelf.singleSelectedEvent) {
+                        weakSelf.singleSelectedEvent(photo);
+                    }
+                    [weakSelf cancelBack];
+                } else {
+                    [weakSelf.selectedPhotoArray addObject:photo];
+                    [weakSelf complete];
+                }
             } else {
                 if (photo.selected && ![weakSelf.selectedPhotoArray containsObject:photo]) {
                     if (weakSelf.selectedPhotoArray.count >= self.maxCount) return -1;
@@ -90,10 +108,18 @@ static CGFloat const FooterViewHeight = 44.f;
     if (!_browseFinish) {
         __weak typeof(self) weakSelf = self;
         _browseFinish = ^(NSInteger index) {
-            if (index < 0) {
-                [weakSelf complete];
+            if (weakSelf.allowsEditing) {
+                IMPhoto *photo = weakSelf.photoCollectionVC.photoArray[index];
+                if (weakSelf.singleSelectedEvent) {
+                    weakSelf.singleSelectedEvent(photo);
+                }
+                [weakSelf cancelBack];
             } else {
-                [weakSelf.photoCollectionVC.collectionView reloadData];
+                if (index < 0) {
+                    [weakSelf complete];
+                } else {
+                    [weakSelf.photoCollectionVC.collectionView reloadData];
+                }
             }
         };
     }
@@ -122,20 +148,26 @@ static CGFloat const FooterViewHeight = 44.f;
         }
     }];
     
-    _footerView = [[IMPhotoCollectionFooterView alloc] init];
-    [_footerView.previewBtn addTarget:self action:@selector(previewSelectedPhotoArray) forControlEvents:UIControlEventTouchUpInside];
-    [_footerView.completeBtn addTarget:self action:@selector(complete) forControlEvents:UIControlEventTouchUpInside];
-    [_containerView addSubview:_footerView];
-    [_footerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.leading.mas_equalTo(0);
-        make.trailing.mas_equalTo(0);
-        make.bottom.mas_equalTo(0);
-        make.height.mas_equalTo(FooterViewHeight);
-    }];
+    [self setFooterView];
     
     NSArray<IMPhoto *> *photoArray = [IMPhotoManager getPhotoArrayWithAssetCollection:self.currentCollection];
     self.allPhotoDatas[self.currentCollection.localIdentifier] = photoArray;
     self.photoCollectionVC.photoArray = photoArray;
+}
+
+- (void)setFooterView {
+    if (!self.allowsEditing) {
+        _footerView = [[IMPhotoCollectionFooterView alloc] init];
+        [_footerView.previewBtn addTarget:self action:@selector(previewSelectedPhotoArray) forControlEvents:UIControlEventTouchUpInside];
+        [_footerView.completeBtn addTarget:self action:@selector(complete) forControlEvents:UIControlEventTouchUpInside];
+        [_containerView addSubview:_footerView];
+        [_footerView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.leading.mas_equalTo(0);
+            make.trailing.mas_equalTo(0);
+            make.bottom.mas_equalTo(0);
+            make.height.mas_equalTo(FooterViewHeight);
+        }];
+    }
 }
 
 - (void)setNavigationBar {
@@ -169,9 +201,15 @@ static CGFloat const FooterViewHeight = 44.f;
 - (IMPhotoCollectionViewController *)photoCollectionVC {
     if (!_photoCollectionVC) {
         _photoCollectionVC = [[IMPhotoCollectionViewController alloc] initWithPhotoMaxCount:self.maxCount];
+        _photoCollectionVC.allowsEditing = self.allowsEditing;
         [_containerView addSubview:_photoCollectionVC.collectionView];
+        __weak typeof(self) weakSelf = self;
         [_photoCollectionVC.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, FooterViewHeight, 0));
+            if (weakSelf.allowsEditing) {
+                make.edges.mas_equalTo(UIEdgeInsetsZero);
+            } else {
+                make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, FooterViewHeight, 0));
+            }
         }];
         [_photoCollectionVC setPhotoSelectEvent:self.photoSelectEvent];
         [_photoCollectionVC setBrowseFinish:self.browseFinish];
@@ -241,8 +279,8 @@ static CGFloat const FooterViewHeight = 44.f;
 
 #pragma mark - 完成
 - (void)complete {
-    if (self.selectEvent) {
-        self.selectEvent(self.selectedPhotoArray);
+    if (self.multiSelectedEvent) {
+        self.multiSelectedEvent(self.selectedPhotoArray);
     }
     [self cancelBack];
 }

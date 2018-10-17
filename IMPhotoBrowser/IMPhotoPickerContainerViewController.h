@@ -13,7 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface IMPhotoPickerContainerViewController : UIViewController
 
-- (instancetype)initWithPhotoMaxCount:(NSInteger)maxCount selectEvent:(IMPBPhotoArraySelectEvent)selectEvent;
+- (instancetype)initWithPhotoMaxCount:(NSInteger)maxCount multiSelectedEvent:(IMPBPhotoArraySelectedEvent)multiSelectedEvent;
+
+- (instancetype)initWithCutedSelectedEvent:(IMPBPhotoSelectedEvent)singleSelectedEvent;
 
 @end
 

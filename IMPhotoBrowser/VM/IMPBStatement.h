@@ -14,8 +14,9 @@
 #define IMPBAlbumPhotoCountKey @"count"
 
 @class IMPhoto;
+typedef void(^IMPBPhotoArraySelectedEvent)(NSArray<IMPhoto *> *photoArray);
+typedef void(^IMPBPhotoSelectedEvent)(IMPhoto *photo);
 typedef NSInteger(^IMPBPhotoSelectEvent)(IMPhoto *photo);
-typedef void(^IMPBPhotoArraySelectEvent)(NSArray<IMPhoto *> *photoArray);
 typedef void(^IMPBPhotoBrowseFinishEvent)(NSInteger index);
 typedef void(^IMPBPhotoBrowsePageChangedEvent)(NSInteger page);
 typedef void(^IMPBPhotoBrowseSingleTapEvent)(void);

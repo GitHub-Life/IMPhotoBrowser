@@ -57,8 +57,11 @@ static NSString * const reuseIdentifier = @"Cell";
     
     __weak typeof(self) weakSelf = self;
     [IMPhotoManager checkPhotoLibraryPermissionsWithFromVC:self GrantedBlock:^{
-        IMPhotoPickerContainerViewController *photoPickerContainerVC = [[IMPhotoPickerContainerViewController alloc] initWithPhotoMaxCount:3 selectEvent:^(NSArray<IMPhoto *> *photoArray) {
-            weakSelf.photoArray = photoArray;
+//        IMPhotoPickerContainerViewController *photoPickerContainerVC = [[IMPhotoPickerContainerViewController alloc] initWithPhotoMaxCount:3 multiSelectedEvent:^(NSArray<IMPhoto *> *photoArray) {
+//            weakSelf.photoArray = photoArray;
+//        }];
+        IMPhotoPickerContainerViewController *photoPickerContainerVC = [[IMPhotoPickerContainerViewController alloc] initWithCutedSelectedEvent:^(IMPhoto *photo) {
+            weakSelf.photoArray = @[photo];
         }];
         [weakSelf presentViewController:[[UINavigationController alloc] initWithRootViewController:photoPickerContainerVC] animated:YES completion:nil];
     }];

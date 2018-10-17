@@ -157,6 +157,7 @@
     if (!self.photoSelectEvent) return NO;
     NSInteger selectedPhotoCount = self.photoSelectEvent(self.collectionView.currentPhoto);
     if (selectedPhotoCount < 0) {
+        // 这里如果为-1，表示选择图片不成功
         [self alertMessage:[NSString stringWithFormat:@"当前最多选择%d张图片", (int)self.maxCount]];
         return NO;
     }

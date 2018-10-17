@@ -18,7 +18,7 @@
 
 @implementation IMCameraman
 
-- (void)takePhotoWithFromVC:(UIViewController *)fromVC result:(IMCameramanResultBlock)result {
+- (void)takePhotoWithAllowsEditing:(BOOL)allowsEditing fromVC:(UIViewController *)fromVC result:(IMCameramanResultBlock)result {
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         [fromVC alertMessage:@"无可用摄像设备"];
         return;
@@ -28,7 +28,7 @@
         case AVAuthorizationStatusNotDetermined: {
             [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
                 if (granted) {
-                    [self takePhotoWithFromVC:fromVC result:result];
+                    [self takePhotoWithAllowsEditing:allowsEditing fromVC:fromVC result:result];
                 }
             }];
         } break;
@@ -47,6 +47,7 @@
             imagePickerController.delegate = self;
             imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
             imagePickerController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+            imagePickerController.allowsEditing = allowsEditing;
             [fromVC presentViewController:imagePickerController animated:YES completion:nil];
         } break;
     }

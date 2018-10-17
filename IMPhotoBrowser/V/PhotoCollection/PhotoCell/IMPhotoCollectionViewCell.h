@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) IMPhoto *photo;
 
 @property (nonatomic, assign) BOOL disableSelect;
+@property (nonatomic, assign) BOOL hideSelectBtn;
 
 @property (nonatomic, strong) IMPBPhotoSelectEvent photoSelectEvent;
 

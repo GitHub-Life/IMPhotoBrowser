@@ -23,35 +23,31 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [_imgView setContentMode:UIViewContentModeCenter];
     [_imgView setTintColor:UIColor.lightGrayColor];
 }
 
 - (void)setPhoto:(IMPhoto *)photo {
     _photo = photo;
-    if (_photo) {
-        [self.imgView setContentMode:UIViewContentModeScaleAspectFill];
-        self.maskView.hidden = _photo.selected || !self.disableSelect;
-        if (_photo.thumbImage) {
-            self.imgView.image = _photo.thumbImage;
-        } else {
-            self.imgView.image = _photo.image;
-            if (_photo.asset) {
-                __weak typeof(self) weakSelf = self;
-                [[PHImageManager defaultManager] requestImageForAsset:_photo.asset targetSize:self.bounds.size contentMode:PHImageContentModeAspectFill options:self.imgRequestOptions resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-                    weakSelf.imgView.image = result;
-                    weakSelf.photo.thumbImage = result;
-                }];
-            }
-        }
-        self.selectBtn.hidden = NO;
-        self.selectBtn.selected = _photo.selected;
+    [self.imgView setContentMode:UIViewContentModeScaleAspectFill];
+    self.maskView.hidden = _photo.selected || !self.disableSelect;
+    if (_photo.thumbImage) {
+        self.imgView.image = _photo.thumbImage;
     } else {
-        self.maskView.hidden = !self.disableSelect;
-        [self.imgView setContentMode:UIViewContentModeCenter];
-        self.imgView.image = [UIImage imageNamed:@"im_ico_camera"];
-        self.selectBtn.hidden = YES;
+        self.imgView.image = _photo.image;
+        if (_photo.asset) {
+            __weak typeof(self) weakSelf = self;
+            [[PHImageManager defaultManager] requestImageForAsset:_photo.asset targetSize:self.bounds.size contentMode:PHImageContentModeAspectFill options:self.imgRequestOptions resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                weakSelf.imgView.image = result;
+                weakSelf.photo.thumbImage = result;
+            }];
+        }
     }
+    self.selectBtn.selected = _photo.selected;
+}
+
+- (void)setHideSelectBtn:(BOOL)hideSelectBtn {
+    _hideSelectBtn = hideSelectBtn;
+    self.selectBtn.hidden = _hideSelectBtn;
 }
 
 - (PHImageRequestOptions *)imgRequestOptions {

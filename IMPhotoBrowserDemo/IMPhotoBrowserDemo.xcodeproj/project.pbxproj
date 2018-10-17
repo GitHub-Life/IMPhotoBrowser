@@ -36,6 +36,10 @@
 		B73BB5AB2176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73BB5AA2176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.m */; };
 		B75C88962171EAD7004531AC /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75C88952171EAD7004531AC /* CollectionViewController.m */; };
 		B7F593D4217724E9006CF135 /* IMCameraman.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F593D3217724E9006CF135 /* IMCameraman.m */; };
+		B7F594A621773273006CF135 /* IMCameraCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F594A521773273006CF135 /* IMCameraCollectionViewCell.m */; };
+		B7F594AA21773822006CF135 /* IMSinglePhotoPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F594A921773822006CF135 /* IMSinglePhotoPreviewViewController.m */; };
+		B7F594AE21773B61006CF135 /* IMSinglePhotoPreviewFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F594AD21773B61006CF135 /* IMSinglePhotoPreviewFooterView.m */; };
+		B7F594B22177533D006CF135 /* IMPhotoEditingMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F594B12177533D006CF135 /* IMPhotoEditingMaskView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -95,6 +99,14 @@
 		B75C88952171EAD7004531AC /* CollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
 		B7F593D2217724E9006CF135 /* IMCameraman.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMCameraman.h; sourceTree = "<group>"; };
 		B7F593D3217724E9006CF135 /* IMCameraman.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMCameraman.m; sourceTree = "<group>"; };
+		B7F594A421773273006CF135 /* IMCameraCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMCameraCollectionViewCell.h; sourceTree = "<group>"; };
+		B7F594A521773273006CF135 /* IMCameraCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMCameraCollectionViewCell.m; sourceTree = "<group>"; };
+		B7F594A821773822006CF135 /* IMSinglePhotoPreviewViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMSinglePhotoPreviewViewController.h; sourceTree = "<group>"; };
+		B7F594A921773822006CF135 /* IMSinglePhotoPreviewViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMSinglePhotoPreviewViewController.m; sourceTree = "<group>"; };
+		B7F594AC21773B61006CF135 /* IMSinglePhotoPreviewFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMSinglePhotoPreviewFooterView.h; sourceTree = "<group>"; };
+		B7F594AD21773B61006CF135 /* IMSinglePhotoPreviewFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMSinglePhotoPreviewFooterView.m; sourceTree = "<group>"; };
+		B7F594B02177533D006CF135 /* IMPhotoEditingMaskView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMPhotoEditingMaskView.h; sourceTree = "<group>"; };
+		B7F594B12177533D006CF135 /* IMPhotoEditingMaskView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMPhotoEditingMaskView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,21 +268,22 @@
 		B73977AC2175B6550052B7CF /* PhotoCollection */ = {
 			isa = PBXGroup;
 			children = (
+				B7F594A32177324C006CF135 /* CameraCell */,
 				B73977AD2175B6550052B7CF /* IMPhotoCollectionViewController.m */,
-				B73977AE2175B6550052B7CF /* Cell */,
+				B73977AE2175B6550052B7CF /* PhotoCell */,
 				B73977B22175B6550052B7CF /* IMPhotoCollectionViewController.h */,
 			);
 			path = PhotoCollection;
 			sourceTree = "<group>";
 		};
-		B73977AE2175B6550052B7CF /* Cell */ = {
+		B73977AE2175B6550052B7CF /* PhotoCell */ = {
 			isa = PBXGroup;
 			children = (
 				B73977AF2175B6550052B7CF /* IMPhotoCollectionViewCell.h */,
 				B73977B02175B6550052B7CF /* IMPhotoCollectionViewCell.xib */,
 				B73977B12175B6550052B7CF /* IMPhotoCollectionViewCell.m */,
 			);
-			path = Cell;
+			path = PhotoCell;
 			sourceTree = "<group>";
 		};
 		B73977B32175B6550052B7CF /* SelectedStateBtn */ = {
@@ -323,6 +336,7 @@
 		B73977C32175B6550052B7CF /* Browser */ = {
 			isa = PBXGroup;
 			children = (
+				B7F594A7217737F9006CF135 /* SinglePhoto */,
 				B73BB5A82176CA0400A2E17A /* Network */,
 				B73BB5A72176C9CD00A2E17A /* PhotoAlbum */,
 				B73977CB2175B6550052B7CF /* Cell */,
@@ -411,6 +425,44 @@
 				B739779D2175B6550052B7CF /* UIViewController+IMAlert.m */,
 			);
 			path = Alert;
+			sourceTree = "<group>";
+		};
+		B7F594A32177324C006CF135 /* CameraCell */ = {
+			isa = PBXGroup;
+			children = (
+				B7F594A421773273006CF135 /* IMCameraCollectionViewCell.h */,
+				B7F594A521773273006CF135 /* IMCameraCollectionViewCell.m */,
+			);
+			path = CameraCell;
+			sourceTree = "<group>";
+		};
+		B7F594A7217737F9006CF135 /* SinglePhoto */ = {
+			isa = PBXGroup;
+			children = (
+				B7F594AF2177530C006CF135 /* EditingMaskView */,
+				B7F594AB21773B2E006CF135 /* FooterView */,
+				B7F594A821773822006CF135 /* IMSinglePhotoPreviewViewController.h */,
+				B7F594A921773822006CF135 /* IMSinglePhotoPreviewViewController.m */,
+			);
+			path = SinglePhoto;
+			sourceTree = "<group>";
+		};
+		B7F594AB21773B2E006CF135 /* FooterView */ = {
+			isa = PBXGroup;
+			children = (
+				B7F594AC21773B61006CF135 /* IMSinglePhotoPreviewFooterView.h */,
+				B7F594AD21773B61006CF135 /* IMSinglePhotoPreviewFooterView.m */,
+			);
+			path = FooterView;
+			sourceTree = "<group>";
+		};
+		B7F594AF2177530C006CF135 /* EditingMaskView */ = {
+			isa = PBXGroup;
+			children = (
+				B7F594B02177533D006CF135 /* IMPhotoEditingMaskView.h */,
+				B7F594B12177533D006CF135 /* IMPhotoEditingMaskView.m */,
+			);
+			path = EditingMaskView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -547,7 +599,9 @@
 				B73977EE2175B6550052B7CF /* IMBaseAnimationTransitioning.m in Sources */,
 				B73977DF2175B6550052B7CF /* IMPhotoCollectionViewController.m in Sources */,
 				B73BB5AB2176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.m in Sources */,
+				B7F594A621773273006CF135 /* IMCameraCollectionViewCell.m in Sources */,
 				B75C88962171EAD7004531AC /* CollectionViewController.m in Sources */,
+				B7F594B22177533D006CF135 /* IMPhotoEditingMaskView.m in Sources */,
 				B73977E92175B6550052B7CF /* IMPhotoBrowserHeaderView.m in Sources */,
 				B73977DE2175B6550052B7CF /* IMPhoto.m in Sources */,
 				B73977EB2175B6550052B7CF /* IMPhotoBrowserViewController.m in Sources */,
@@ -557,8 +611,10 @@
 				B73977E62175B6550052B7CF /* IMPhotoAlbumTableViewCell.m in Sources */,
 				B7F593D4217724E9006CF135 /* IMCameraman.m in Sources */,
 				B73977DB2175B6550052B7CF /* UIViewController+IMAlert.m in Sources */,
+				B7F594AE21773B61006CF135 /* IMSinglePhotoPreviewFooterView.m in Sources */,
 				B73977E42175B6550052B7CF /* IMPBCloseButton.m in Sources */,
 				B73977D92175B6550052B7CF /* IMPhotoPickerContainerViewController.m in Sources */,
+				B7F594AA21773822006CF135 /* IMSinglePhotoPreviewViewController.m in Sources */,
 				B73977E12175B6550052B7CF /* IMPhotoCollectionViewCell.m in Sources */,
 				B73977E52175B6550052B7CF /* IMPhotoAlbumTableViewController.m in Sources */,
 				B73977ED2175B6550052B7CF /* IMPhotoBrowserAnimationTransitioning.m in Sources */,

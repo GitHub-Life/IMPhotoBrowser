@@ -89,7 +89,9 @@
     PHFetchResult<PHAsset *> *assetResult = [PHAsset fetchAssetsInAssetCollection:assetCollection options:[self assetFetchOptions]];
     NSMutableArray<IMPhoto *> *assetArray = [NSMutableArray arrayWithCapacity:assetResult.count];
     [assetResult enumerateObjectsUsingBlock:^(PHAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [assetArray addObject:[IMPhoto photoWithAsset:obj]];
+        IMPhoto *photo = [IMPhoto photoWithAsset:obj];
+        photo.index = idx;
+        [assetArray addObject:photo];
     }];
     return assetArray;
 }

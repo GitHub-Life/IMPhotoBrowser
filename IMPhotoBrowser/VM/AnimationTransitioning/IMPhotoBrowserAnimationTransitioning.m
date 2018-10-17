@@ -136,6 +136,7 @@
 #pragma mark - UIGestureRecognizer Delegate
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     if (![gestureRecognizer isKindOfClass:UIPanGestureRecognizer.class]) return NO;
+    if (!self.targetViewBlock || self.targetViewBlock(0) == nil) return NO;
     CGPoint translation = [((UIPanGestureRecognizer *)gestureRecognizer) translationInView:gestureRecognizer.view];
     return fabs(translation.y) > fabs(translation.x);
 }

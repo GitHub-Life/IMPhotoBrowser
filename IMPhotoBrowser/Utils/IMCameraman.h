@@ -14,7 +14,7 @@ typedef void(^IMCameramanResultBlock)(UIImage *__nullable image);
 
 @interface IMCameraman : NSObject
 
-- (void)takePhotoWithFromVC:(UIViewController *)fromVC result:(IMCameramanResultBlock)result;
+- (void)takePhotoWithAllowsEditing:(BOOL)allowsEditing fromVC:(UIViewController *)fromVC result:(IMCameramanResultBlock)result;
 
 @end
 
