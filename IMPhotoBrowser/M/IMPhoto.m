@@ -34,7 +34,10 @@
 
 #pragma mark - 获取 Image
 - (void)getImageWithResult:(void (^)(UIImage * _Nullable))resultBlock {
-    if (_asset) {
+    if (!resultBlock) resultBlock;
+    if (_image) {
+        resultBlock(_image);
+    } else if (_asset) {
         [self getImageByAssetWithResult:resultBlock];
     } else if (_imageUrlStr.length) {
         [self getImageByUrlWithResult:resultBlock];

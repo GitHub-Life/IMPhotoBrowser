@@ -40,8 +40,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImage *image;
 
 - (void)getImageWithResult:(void(^)(UIImage *__nullable image))resultBlock;
-- (void)getImageByAssetWithResult:(void(^)(UIImage *__nullable image))resultBlock;
-- (void)getImageByUrlWithResult:(void(^)(UIImage *__nullable image))resultBlock;
 
 @end
 
