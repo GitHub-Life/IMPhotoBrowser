@@ -8,13 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "IMPBStatement.h"
-@class IMPhoto;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IMPhotoPickerContainerViewController : UIViewController
 
-- (instancetype)initWithChoosePhotoMaxCount:(NSInteger)maxCount selectEvent:(IMPBPhotoArraySelectEvent)selectEvent;
+- (instancetype)initWithPhotoMaxCount:(NSInteger)maxCount selectEvent:(IMPBPhotoArraySelectEvent)selectEvent;
 
 @end
 

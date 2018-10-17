@@ -9,28 +9,42 @@
 #import "UIViewController+IMTakePhoto.h"
 #import <objc/runtime.h>
 #import <AVFoundation/AVFoundation.h>
+#import "UIViewController+IMAlert.h"
 
 @implementation UIViewController (IMTakePhoto)
 
 - (void)takePhotoWithResult:(void(^)(UIImage *))result {
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        [self alertMessage:@"无可用摄像设备"];
+        return;
+    }
     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-    if (authStatus != AVAuthorizationStatusAuthorized) {
-        if (authStatus == AVAuthorizationStatusRestricted || authStatus == AVAuthorizationStatusDenied) {
+    switch (authStatus) {
+        case AVAuthorizationStatusNotDetermined: {
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                if (granted) {
+                    [self takePhotoWithResult:result];
+                }
+            }];
+        } break;
+        case AVAuthorizationStatusDenied:
+        case AVAuthorizationStatusRestricted: {
             UIAlertController *alertC = [UIAlertController alertControllerWithTitle:nil message:@"无法打开相机，请检查拍照权限" preferredStyle:UIAlertControllerStyleAlert];
             [alertC addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
             [alertC addAction:[UIAlertAction actionWithTitle:@"前往设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
             }]];
             [self presentViewController:alertC animated:YES completion:nil];
-        }
-        return;
+        } break;
+        case AVAuthorizationStatusAuthorized: {
+            self.resultBlock = result;
+            UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+            imagePickerController.delegate = self;
+            imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+            imagePickerController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+            [self presentViewController:imagePickerController animated:YES completion:nil];
+        } break;
     }
-    self.resultBlock = result;
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-    imagePickerController.delegate = self;
-    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-    imagePickerController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self presentViewController:imagePickerController animated:YES completion:nil];
 }
 
 

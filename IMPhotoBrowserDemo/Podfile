@@ -10,5 +10,6 @@ target 'IMPhotoBrowserDemo' do
 
     pod 'Reveal-SDK', :configurations => ['Debug']
     pod 'Masonry'
+    pod 'SDWebImage'
 
 end

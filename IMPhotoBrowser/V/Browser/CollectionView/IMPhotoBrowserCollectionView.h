@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger currentIndex;
 @property (nonatomic, strong, readonly) IMPhoto *currentPhoto;
 @property (nonatomic, strong, readonly) UIView *animView;
+- (void)saveCurrentPhotoWithFromVC:(UIViewController *)fromVC result:(void(^)(BOOL success))result;
 
 @property (nonatomic, strong) IMPBPhotoBrowseSingleTapEvent singleTapEvent;
 @property (nonatomic, strong) IMPBPhotoBrowsePageChangedEvent pageChanged;

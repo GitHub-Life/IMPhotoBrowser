@@ -51,13 +51,14 @@
         make.width.mas_equalTo(HeaderViewHeight);
     }];
     
-    _completeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_completeBtn setContentEdgeInsets:UIEdgeInsetsMake(0, 16, 0, 16)];
-    _completeBtn.titleLabel.font = [UIFont systemFontOfSize:15.f];
-    [_completeBtn setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-    [_completeBtn setTitle:@"" forState:UIControlStateDisabled];
-    [self addSubview:_completeBtn];
-    [_completeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    _rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_rightBtn setContentEdgeInsets:UIEdgeInsetsMake(0, 16, 0, 16)];
+    _rightBtn.titleLabel.font = [UIFont systemFontOfSize:15.f];
+    [_rightBtn setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
+    [_rightBtn setTitleColor:UIColor.grayColor forState:UIControlStateDisabled];
+    [_rightBtn setTitle:@"" forState:UIControlStateDisabled];
+    [self addSubview:_rightBtn];
+    [_rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(weakSelf.statusBarHeight);
         make.trailing.mas_equalTo(0);
         make.bottom.mas_equalTo(0);

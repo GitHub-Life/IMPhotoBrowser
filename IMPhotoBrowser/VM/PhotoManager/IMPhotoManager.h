@@ -10,6 +10,7 @@
 #import "IMPBStatement.h"
 @class PHAssetCollection;
 @class IMPhoto;
+@class UIViewController;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,8 +21,19 @@ NS_ASSUME_NONNULL_BEGIN
 /** 智能相册集合，字典合适同上⬆️ */
 + (NSArray<NSDictionary *> *)getSmartPhotoAlbumArray;
 
-/** 获取相册中的图片集合 */
+/**
+ 获取相册中的相片集合
+ @param assetCollection 相册对象
+ @return 相片集合
+ */
 + (NSArray<IMPhoto *> *)getPhotoArrayWithAssetCollection:(PHAssetCollection *)assetCollection;
+
+/**
+ 检查相册存取权限
+ @param fromVC 未授权时用于弹出UIAlertController的VC(为nil则不弹出)
+ @param grantedBlock 授权回调
+ */
++ (void)checkPhotoLibraryPermissionsWithFromVC:(UIViewController *)fromVC GrantedBlock:(void(^)(void))grantedBlock;
 
 @end
 

@@ -35,6 +35,7 @@
 		B73977EB2175B6550052B7CF /* IMPhotoBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977CE2175B6550052B7CF /* IMPhotoBrowserViewController.m */; };
 		B73977ED2175B6550052B7CF /* IMPhotoBrowserAnimationTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977D52175B6550052B7CF /* IMPhotoBrowserAnimationTransitioning.m */; };
 		B73977EE2175B6550052B7CF /* IMBaseAnimationTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977D82175B6550052B7CF /* IMBaseAnimationTransitioning.m */; };
+		B73BB5AB2176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73BB5AA2176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.m */; };
 		B75C88962171EAD7004531AC /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75C88952171EAD7004531AC /* CollectionViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +94,8 @@
 		B73977D52175B6550052B7CF /* IMPhotoBrowserAnimationTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMPhotoBrowserAnimationTransitioning.m; sourceTree = "<group>"; };
 		B73977D72175B6550052B7CF /* IMBaseAnimationTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMBaseAnimationTransitioning.h; sourceTree = "<group>"; };
 		B73977D82175B6550052B7CF /* IMBaseAnimationTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMBaseAnimationTransitioning.m; sourceTree = "<group>"; };
+		B73BB5A92176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMNetworkPhotoBrowserViewController.h; sourceTree = "<group>"; };
+		B73BB5AA2176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMNetworkPhotoBrowserViewController.m; sourceTree = "<group>"; };
 		B75C88942171EAD7004531AC /* CollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
 		B75C88952171EAD7004531AC /* CollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -198,10 +201,8 @@
 		B739779A2175B6550052B7CF /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				B739779B2175B6550052B7CF /* UIViewController+IMAlert.h */,
-				B739779C2175B6550052B7CF /* UIViewController+IMTakePhoto.m */,
-				B739779D2175B6550052B7CF /* UIViewController+IMAlert.m */,
-				B739779E2175B6550052B7CF /* UIViewController+IMTakePhoto.h */,
+				B73BB5B22176DA3D00A2E17A /* TakePhoto */,
+				B73BB5B12176DA3700A2E17A /* Alert */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -326,11 +327,11 @@
 		B73977C32175B6550052B7CF /* Browser */ = {
 			isa = PBXGroup;
 			children = (
-				B73977C42175B6550052B7CF /* CollectionView */,
-				B73977C72175B6550052B7CF /* IMPhotoBrowserViewController.h */,
-				B73977C82175B6550052B7CF /* HeaderView */,
+				B73BB5A82176CA0400A2E17A /* Network */,
+				B73BB5A72176C9CD00A2E17A /* PhotoAlbum */,
 				B73977CB2175B6550052B7CF /* Cell */,
-				B73977CE2175B6550052B7CF /* IMPhotoBrowserViewController.m */,
+				B73977C42175B6550052B7CF /* CollectionView */,
+				B73977C82175B6550052B7CF /* HeaderView */,
 			);
 			path = Browser;
 			sourceTree = "<group>";
@@ -387,6 +388,42 @@
 				B73977D52175B6550052B7CF /* IMPhotoBrowserAnimationTransitioning.m */,
 			);
 			path = AnimationTransitioning;
+			sourceTree = "<group>";
+		};
+		B73BB5A72176C9CD00A2E17A /* PhotoAlbum */ = {
+			isa = PBXGroup;
+			children = (
+				B73977C72175B6550052B7CF /* IMPhotoBrowserViewController.h */,
+				B73977CE2175B6550052B7CF /* IMPhotoBrowserViewController.m */,
+			);
+			path = PhotoAlbum;
+			sourceTree = "<group>";
+		};
+		B73BB5A82176CA0400A2E17A /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				B73BB5A92176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.h */,
+				B73BB5AA2176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.m */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		B73BB5B12176DA3700A2E17A /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				B739779B2175B6550052B7CF /* UIViewController+IMAlert.h */,
+				B739779D2175B6550052B7CF /* UIViewController+IMAlert.m */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
+		B73BB5B22176DA3D00A2E17A /* TakePhoto */ = {
+			isa = PBXGroup;
+			children = (
+				B739779C2175B6550052B7CF /* UIViewController+IMTakePhoto.m */,
+				B739779E2175B6550052B7CF /* UIViewController+IMTakePhoto.h */,
+			);
+			path = TakePhoto;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -523,6 +560,7 @@
 				B7206A71216EEEE200FE745D /* main.m in Sources */,
 				B73977EE2175B6550052B7CF /* IMBaseAnimationTransitioning.m in Sources */,
 				B73977DF2175B6550052B7CF /* IMPhotoCollectionViewController.m in Sources */,
+				B73BB5AB2176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.m in Sources */,
 				B75C88962171EAD7004531AC /* CollectionViewController.m in Sources */,
 				B73977E92175B6550052B7CF /* IMPhotoBrowserHeaderView.m in Sources */,
 				B73977DE2175B6550052B7CF /* IMPhoto.m in Sources */,

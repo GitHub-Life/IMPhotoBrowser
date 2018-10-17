@@ -94,4 +94,35 @@
     return assetArray;
 }
 
+#pragma mark - 检查相册存取权限
++ (void)checkPhotoLibraryPermissionsWithFromVC:(UIViewController *)fromVC GrantedBlock:(void(^)(void))grantedBlock {
+    switch (PHPhotoLibrary.authorizationStatus) {
+        case PHAuthorizationStatusNotDetermined: {
+            [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+                if (status == PHAuthorizationStatusAuthorized) {
+                    if (grantedBlock) {
+                        grantedBlock();
+                    }
+                }
+            }];
+        } break;
+        case PHAuthorizationStatusDenied:
+        case PHAuthorizationStatusRestricted: {
+            if (fromVC) {
+                UIAlertController *alertC = [UIAlertController alertControllerWithTitle:nil message:@"无法读取相册，请检查相册访问权限" preferredStyle:UIAlertControllerStyleAlert];
+                [alertC addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+                [alertC addAction:[UIAlertAction actionWithTitle:@"前往设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                }]];
+                [fromVC presentViewController:alertC animated:YES completion:nil];
+            }
+        } break;
+        case PHAuthorizationStatusAuthorized: {
+            if (grantedBlock) {
+                grantedBlock();
+            }
+        } break;
+    }
+}
+
 @end

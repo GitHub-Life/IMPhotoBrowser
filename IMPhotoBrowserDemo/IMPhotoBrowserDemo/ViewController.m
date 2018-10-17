@@ -27,7 +27,7 @@
     [super viewDidAppear:animated];
 //    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:[[IMPhotoAlbumTableViewController alloc] init]] animated:YES completion:nil];
 //    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:[[IMPhotoCollectionViewController alloc] init]] animated:YES completion:nil];
-//    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:[[IMPhotoPickerContainerViewController alloc] initWithChoosePhotoMaxCount:3]] animated:YES completion:nil];
+//    [self presentViewController:[[UINavigationController alloc] initWithRootViewController:[[IMPhotoPickerContainerViewController alloc] initWithPhotoMaxCount:3]] animated:YES completion:nil];
 }
 
 @end

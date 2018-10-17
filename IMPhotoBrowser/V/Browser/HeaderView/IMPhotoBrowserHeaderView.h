@@ -21,7 +21,7 @@ static CGFloat const HeaderViewHeight = 44.f;
 
 @property (nonatomic, strong) UIButton *closeBtn;
 @property (nonatomic, strong) UILabel *countLabel;
-@property (nonatomic, strong) UIButton *completeBtn;
+@property (nonatomic, strong) UIButton *rightBtn;
 
 - (void)addToTargetView:(UIView *)targetView;
 

@@ -8,6 +8,8 @@
 
 #import "IMPhotoBrowserCollectionView.h"
 #import "IMPhotoBrowserCollectionViewCell.h"
+#import "IMPhotoManager.h"
+#import "IMPhoto.h"
 
 static NSString *CellIdentifier = @"IMPhotoBrowserCollectionViewCell";
 
@@ -102,6 +104,18 @@ static NSString *CellIdentifier = @"IMPhotoBrowserCollectionViewCell";
     IMPhotoBrowserCollectionViewCell *cell = (IMPhotoBrowserCollectionViewCell *)[self cellForItemAtIndexPath:[NSIndexPath indexPathForRow:self.currentIndex inSection:0]];
     if (cell.scrollView.zoomScale != 1.f) return nil;
     return cell.imageView;
+}
+
+#pragma mark - 保存当前显示的图片
+- (void)saveCurrentPhotoWithFromVC:(UIViewController *)fromVC result:(nonnull void (^)(BOOL))result {
+    if (self.currentIndex >= 0 && self.currentIndex < self.photoArray.count && self.photoArray[self.currentIndex].image) {
+        IMPhoto *photo = self.photoArray[self.currentIndex];
+        [IMPhotoManager checkPhotoLibraryPermissionsWithFromVC:fromVC GrantedBlock:^{
+            UIImageWriteToSavedPhotosAlbum(self.photoArray[self.currentIndex].image, nil, nil, nil);
+            photo.saved = YES;
+            if (result) result(YES);
+        }];
+    }
 }
 
 @end

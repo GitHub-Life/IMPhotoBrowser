@@ -11,9 +11,12 @@
 @implementation UIViewController (IMAlert)
 
 - (void)alertMessage:(NSString *)message {
+    if (!message.length) return;
+    CGFloat duration = message.length / 20.f;
+    if (duration < 0.5f) duration = 0.5f;
     UIAlertController *alertC = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
     [self presentViewController:alertC animated:YES completion:^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [alertC dismissViewControllerAnimated:YES completion:nil];
         });
     }];

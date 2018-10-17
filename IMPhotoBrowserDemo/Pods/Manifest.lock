@@ -1,15 +1,20 @@
 PODS:
   - Masonry (1.1.0)
   - Reveal-SDK (13)
+  - SDWebImage (4.3.2):
+    - SDWebImage/Core (= 4.3.2)
+  - SDWebImage/Core (4.3.2)
 
 DEPENDENCIES:
   - Masonry
   - Reveal-SDK
+  - SDWebImage
 
 SPEC CHECKSUMS:
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   Reveal-SDK: ccc2b0f8014965ea448b7534a7c2c8da232b75e8
+  SDWebImage: 29bd3c0bc1f01e5eb59720847c64ad4c4ca1af5d
 
-PODFILE CHECKSUM: 5fdbf6e2991855ca6f636c2695e46904b2f2e0a4
+PODFILE CHECKSUM: 444ecb27011ba628e3a397d2b9706d9f5ac69a5f
 
 COCOAPODS: 1.4.0

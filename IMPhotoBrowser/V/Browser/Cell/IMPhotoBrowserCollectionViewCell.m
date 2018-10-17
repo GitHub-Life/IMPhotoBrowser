@@ -15,18 +15,13 @@
 
 @property (nonatomic, assign) CGFloat cellW;
 @property (nonatomic, assign) CGFloat cellH;
+@property (nonatomic, strong) UIActivityIndicatorView *aiv;
 
 @end
 
 @implementation IMPhotoBrowserCollectionViewCell
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
-        [self initView];
-    }
-    return self;
-}
-
+#pragma mark - 懒加载
 - (UIScrollView *)scrollView {
     if (!_scrollView) {
         _scrollView = [[UIScrollView alloc] initWithFrame:self.bounds];
@@ -47,11 +42,31 @@
     return _imageView;
 }
 
+- (UIActivityIndicatorView *)aiv {
+    if (!_aiv) {
+        _aiv = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        _aiv.hidesWhenStopped = YES;
+        _aiv.color = UIColor.grayColor;
+        _aiv.frame = self.bounds;
+        _aiv.hidden = YES;
+    }
+    return _aiv;
+}
+
+#pragma mark - 初始化
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        [self initView];
+    }
+    return self;
+}
+
 - (void)initView {
     [self addSubview:self.scrollView];
     _cellW = CGRectGetWidth(self.bounds);
     _cellH = CGRectGetHeight(self.bounds);
     [self.scrollView addSubview:self.imageView];
+    [self addSubview:self.aiv];
     
     UITapGestureRecognizer *singleTapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapEvent:)];
     singleTapGr.numberOfTapsRequired = 1;
@@ -64,26 +79,45 @@
     [singleTapGr requireGestureRecognizerToFail:doubleTapGr];
 }
 
+#pragma mark - LoadingView 显示/隐藏
+- (void)loading:(BOOL)show {
+    if (show && self.aiv.hidden) {
+        self.aiv.hidden = NO;
+        [self.aiv startAnimating];
+        [UIView animateWithDuration:0.3f animations:^{
+            self.aiv.alpha = 1.f;
+        }];
+    } else if (!show && !self.aiv.hidden) {
+        [UIView animateWithDuration:0.3f animations:^{
+            self.aiv.alpha = 0.f;
+        } completion:^(BOOL finished) {
+            self.aiv.hidden = YES;
+        }];
+    }
+}
+
+#pragma mark - 赋值Photo
 - (void)setPhoto:(IMPhoto *)photo {
     _photo = photo;
     if (_photo.image) {
         self.imageView.image = _photo.image;
     } else {
         self.imageView.image = _photo.thumbImage;
-        if (_photo.asset) {
-            __weak typeof(self) weakSelf = self;
-            [_photo getImageByAssetWithResult:^(UIImage * _Nullable image) {
-                weakSelf.imageView.image = image;
-                [self setBothZoomScale];
-            }];
-        }
+        [self loading:YES];
+        __weak typeof(self) weakSelf = self;
+        [_photo getImageWithResult:^(UIImage * _Nullable image) {
+            weakSelf.imageView.image = image;
+            [weakSelf setMaxZoomScale];
+            [weakSelf loading:NO];
+        }];
     }
-    [self setBothZoomScale];
+    [self setMaxZoomScale];
     [self.scrollView setZoomScale:1.f];
     [self.scrollView setContentOffset:(CGPointZero)];
 }
 
-- (void)setBothZoomScale {
+#pragma mark - 设置最大缩放比
+- (void)setMaxZoomScale {
     if (!self.imageView.image) return;
     CGSize imgSize = self.imageView.image.size;
     CGFloat widthRatio = imgSize.width / self.cellW;
@@ -94,9 +128,9 @@
     CGFloat offsetX = (self.cellW - imgViewW) / 2;
     CGFloat offsetY = (self.cellH - imgViewH) / 2;
     self.imageView.frame = CGRectMake(offsetX, offsetY, imgViewW, imgViewH);
-    if (ratio <= 1.f) {
+    /*if (ratio <= 1.f) {
         self.scrollView.maximumZoomScale = 1.f;
-    } else if (ratio <= DefaultMaxZoomScale) {
+    } else */if (ratio <= DefaultMaxZoomScale) {
         self.scrollView.maximumZoomScale = DefaultMaxZoomScale;
     } else {
         self.scrollView.maximumZoomScale = ratio;

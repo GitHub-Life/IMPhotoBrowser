@@ -25,7 +25,7 @@ static NSString * const CellIdentifier = @"IMPhotoCollectionViewCell";
 
 @implementation IMPhotoCollectionViewController
 
-- (instancetype)initWithChoosePhotoMaxCount:(NSInteger)maxCount {
+- (instancetype)initWithPhotoMaxCount:(NSInteger)maxCount {
     self = [self init];
     self.maxCount = maxCount;
     return self;

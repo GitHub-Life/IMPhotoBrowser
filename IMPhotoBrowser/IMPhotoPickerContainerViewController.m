@@ -42,7 +42,7 @@ static CGFloat const FooterViewHeight = 44.f;
 @implementation IMPhotoPickerContainerViewController
 
 #pragma mark - 初始化
-- (instancetype)initWithChoosePhotoMaxCount:(NSInteger)maxCount selectEvent:(nonnull IMPBPhotoArraySelectEvent)selectEvent {
+- (instancetype)initWithPhotoMaxCount:(NSInteger)maxCount selectEvent:(nonnull IMPBPhotoArraySelectEvent)selectEvent {
     if (self = [super init]) {
         self.maxCount = maxCount;
         self.selectEvent = selectEvent;
@@ -168,7 +168,7 @@ static CGFloat const FooterViewHeight = 44.f;
 #pragma mark - 照片列表
 - (IMPhotoCollectionViewController *)photoCollectionVC {
     if (!_photoCollectionVC) {
-        _photoCollectionVC = [[IMPhotoCollectionViewController alloc] initWithChoosePhotoMaxCount:self.maxCount];
+        _photoCollectionVC = [[IMPhotoCollectionViewController alloc] initWithPhotoMaxCount:self.maxCount];
         [_containerView addSubview:_photoCollectionVC.collectionView];
         [_photoCollectionVC.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, FooterViewHeight, 0));
@@ -196,7 +196,7 @@ static CGFloat const FooterViewHeight = 44.f;
         _photoAlbumTableVC.tableView.hidden = YES;
         [_containerView addSubview:_photoAlbumTableVC.tableView];
         [_photoAlbumTableVC.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(UIEdgeInsetsZero);
+            make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 100, 0));
         }];
         _photoAlbumTableVC.tableView.transform = CGAffineTransformMakeTranslation(0, -CGRectGetHeight(self.photoAlbumTableVC.tableView.bounds));
         __weak typeof(self) weakSelf = self;

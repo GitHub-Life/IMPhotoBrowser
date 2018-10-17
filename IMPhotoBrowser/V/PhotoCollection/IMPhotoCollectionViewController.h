@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface IMPhotoCollectionViewController : UICollectionViewController
 
-- (instancetype)initWithChoosePhotoMaxCount:(NSInteger)maxCount;
+- (instancetype)initWithPhotoMaxCount:(NSInteger)maxCount;
 
 @property (nonatomic, weak) NSArray<IMPhoto *> *photoArray;
 
