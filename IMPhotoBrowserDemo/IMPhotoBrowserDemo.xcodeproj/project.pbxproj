@@ -15,9 +15,7 @@
 		B7206A6E216EEEE200FE745D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7206A6C216EEEE200FE745D /* LaunchScreen.storyboard */; };
 		B7206A71216EEEE200FE745D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B7206A70216EEEE200FE745D /* main.m */; };
 		B73977D92175B6550052B7CF /* IMPhotoPickerContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977992175B6550052B7CF /* IMPhotoPickerContainerViewController.m */; };
-		B73977DA2175B6550052B7CF /* UIViewController+IMTakePhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = B739779C2175B6550052B7CF /* UIViewController+IMTakePhoto.m */; };
 		B73977DB2175B6550052B7CF /* UIViewController+IMAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = B739779D2175B6550052B7CF /* UIViewController+IMAlert.m */; };
-		B73977DC2175B6550052B7CF /* IMStatusBarTool.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977A02175B6550052B7CF /* IMStatusBarTool.m */; };
 		B73977DD2175B6550052B7CF /* IMPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977A52175B6550052B7CF /* IMPhotoManager.m */; };
 		B73977DE2175B6550052B7CF /* IMPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977A92175B6550052B7CF /* IMPhoto.m */; };
 		B73977DF2175B6550052B7CF /* IMPhotoCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977AD2175B6550052B7CF /* IMPhotoCollectionViewController.m */; };
@@ -37,6 +35,7 @@
 		B73977EE2175B6550052B7CF /* IMBaseAnimationTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977D82175B6550052B7CF /* IMBaseAnimationTransitioning.m */; };
 		B73BB5AB2176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73BB5AA2176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.m */; };
 		B75C88962171EAD7004531AC /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75C88952171EAD7004531AC /* CollectionViewController.m */; };
+		B7F593D4217724E9006CF135 /* IMCameraman.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F593D3217724E9006CF135 /* IMCameraman.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,11 +54,7 @@
 		B7206A70216EEEE200FE745D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B73977992175B6550052B7CF /* IMPhotoPickerContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMPhotoPickerContainerViewController.m; sourceTree = "<group>"; };
 		B739779B2175B6550052B7CF /* UIViewController+IMAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+IMAlert.h"; sourceTree = "<group>"; };
-		B739779C2175B6550052B7CF /* UIViewController+IMTakePhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+IMTakePhoto.m"; sourceTree = "<group>"; };
 		B739779D2175B6550052B7CF /* UIViewController+IMAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+IMAlert.m"; sourceTree = "<group>"; };
-		B739779E2175B6550052B7CF /* UIViewController+IMTakePhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+IMTakePhoto.h"; sourceTree = "<group>"; };
-		B73977A02175B6550052B7CF /* IMStatusBarTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMStatusBarTool.m; sourceTree = "<group>"; };
-		B73977A12175B6550052B7CF /* IMStatusBarTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMStatusBarTool.h; sourceTree = "<group>"; };
 		B73977A32175B6550052B7CF /* IMPBStatement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMPBStatement.h; sourceTree = "<group>"; };
 		B73977A52175B6550052B7CF /* IMPhotoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMPhotoManager.m; sourceTree = "<group>"; };
 		B73977A62175B6550052B7CF /* IMPhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMPhotoManager.h; sourceTree = "<group>"; };
@@ -98,6 +93,8 @@
 		B73BB5AA2176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMNetworkPhotoBrowserViewController.m; sourceTree = "<group>"; };
 		B75C88942171EAD7004531AC /* CollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
 		B75C88952171EAD7004531AC /* CollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
+		B7F593D2217724E9006CF135 /* IMCameraman.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMCameraman.h; sourceTree = "<group>"; };
+		B7F593D3217724E9006CF135 /* IMCameraman.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMCameraman.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,7 +198,6 @@
 		B739779A2175B6550052B7CF /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				B73BB5B22176DA3D00A2E17A /* TakePhoto */,
 				B73BB5B12176DA3700A2E17A /* Alert */,
 			);
 			path = Extension;
@@ -210,8 +206,8 @@
 		B739779F2175B6550052B7CF /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				B73977A02175B6550052B7CF /* IMStatusBarTool.m */,
-				B73977A12175B6550052B7CF /* IMStatusBarTool.h */,
+				B7F593D2217724E9006CF135 /* IMCameraman.h */,
+				B7F593D3217724E9006CF135 /* IMCameraman.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -417,15 +413,6 @@
 			path = Alert;
 			sourceTree = "<group>";
 		};
-		B73BB5B22176DA3D00A2E17A /* TakePhoto */ = {
-			isa = PBXGroup;
-			children = (
-				B739779C2175B6550052B7CF /* UIViewController+IMTakePhoto.m */,
-				B739779E2175B6550052B7CF /* UIViewController+IMTakePhoto.h */,
-			);
-			path = TakePhoto;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -556,7 +543,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B7206A66216EEEE100FE745D /* ViewController.m in Sources */,
-				B73977DC2175B6550052B7CF /* IMStatusBarTool.m in Sources */,
 				B7206A71216EEEE200FE745D /* main.m in Sources */,
 				B73977EE2175B6550052B7CF /* IMBaseAnimationTransitioning.m in Sources */,
 				B73977DF2175B6550052B7CF /* IMPhotoCollectionViewController.m in Sources */,
@@ -569,12 +555,12 @@
 				B73977EA2175B6550052B7CF /* IMPhotoBrowserCollectionViewCell.m in Sources */,
 				B73977E22175B6550052B7CF /* IMPBSelectedStateButton.m in Sources */,
 				B73977E62175B6550052B7CF /* IMPhotoAlbumTableViewCell.m in Sources */,
+				B7F593D4217724E9006CF135 /* IMCameraman.m in Sources */,
 				B73977DB2175B6550052B7CF /* UIViewController+IMAlert.m in Sources */,
 				B73977E42175B6550052B7CF /* IMPBCloseButton.m in Sources */,
 				B73977D92175B6550052B7CF /* IMPhotoPickerContainerViewController.m in Sources */,
 				B73977E12175B6550052B7CF /* IMPhotoCollectionViewCell.m in Sources */,
 				B73977E52175B6550052B7CF /* IMPhotoAlbumTableViewController.m in Sources */,
-				B73977DA2175B6550052B7CF /* UIViewController+IMTakePhoto.m in Sources */,
 				B73977ED2175B6550052B7CF /* IMPhotoBrowserAnimationTransitioning.m in Sources */,
 				B73977E32175B6550052B7CF /* IMPhotoCollectionFooterView.m in Sources */,
 				B73977E82175B6550052B7CF /* IMPhotoBrowserCollectionView.m in Sources */,

@@ -1,21 +1,26 @@
 //
-//  UIViewController+IMTakePhoto.m
+//  IMCameraman.m
 //  IMPhotoBrowserDemo
 //
-//  Created by 万涛 on 2018/10/11.
+//  Created by 万涛 on 2018/10/17.
 //  Copyright © 2018 iMoon. All rights reserved.
 //
 
-#import "UIViewController+IMTakePhoto.h"
-#import <objc/runtime.h>
+#import "IMCameraman.h"
 #import <AVFoundation/AVFoundation.h>
 #import "UIViewController+IMAlert.h"
 
-@implementation UIViewController (IMTakePhoto)
+@interface IMCameraman () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
-- (void)takePhotoWithResult:(void(^)(UIImage *))result {
+@property (nonatomic, strong) IMCameramanResultBlock resultBlock;
+
+@end
+
+@implementation IMCameraman
+
+- (void)takePhotoWithFromVC:(UIViewController *)fromVC result:(IMCameramanResultBlock)result {
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        [self alertMessage:@"无可用摄像设备"];
+        [fromVC alertMessage:@"无可用摄像设备"];
         return;
     }
     AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
@@ -23,7 +28,7 @@
         case AVAuthorizationStatusNotDetermined: {
             [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
                 if (granted) {
-                    [self takePhotoWithResult:result];
+                    [self takePhotoWithFromVC:fromVC result:result];
                 }
             }];
         } break;
@@ -34,7 +39,7 @@
             [alertC addAction:[UIAlertAction actionWithTitle:@"前往设置" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
             }]];
-            [self presentViewController:alertC animated:YES completion:nil];
+            [fromVC presentViewController:alertC animated:YES completion:nil];
         } break;
         case AVAuthorizationStatusAuthorized: {
             self.resultBlock = result;
@@ -42,7 +47,7 @@
             imagePickerController.delegate = self;
             imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
             imagePickerController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-            [self presentViewController:imagePickerController animated:YES completion:nil];
+            [fromVC presentViewController:imagePickerController animated:YES completion:nil];
         } break;
     }
 }
@@ -60,15 +65,6 @@
             self.resultBlock(image);
         }
     });
-}
-
-#pragma mark - ResultBlock
-static char *const ResultBlockKey = "IM_ResultBlockKey";
-- (void)setResultBlock:(IMTakePhotoResultBlock)resultBlock {
-    objc_setAssociatedObject(self, ResultBlockKey, resultBlock, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-- (IMTakePhotoResultBlock)resultBlock {
-    return objc_getAssociatedObject(self, ResultBlockKey);
 }
 
 @end

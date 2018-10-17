@@ -49,7 +49,7 @@
     } else {
         self.maskView.hidden = !self.disableSelect;
         [self.imgView setContentMode:UIViewContentModeCenter];
-        self.imgView.image = [UIImage imageNamed:@"ico_camera"];
+        self.imgView.image = [UIImage imageNamed:@"im_ico_camera"];
         self.selectBtn.hidden = YES;
     }
 }

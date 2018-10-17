@@ -7,8 +7,8 @@
 //
 
 #import "IMPhotoCollectionViewController.h"
-#import "UIViewController+IMTakePhoto.h"
 #import "UIViewController+IMAlert.h"
+#import "IMCameraman.h"
 #import "IMPhotoCollectionViewCell.h"
 #import "IMPhoto.h"
 
@@ -20,6 +20,8 @@ static NSString * const CellIdentifier = @"IMPhotoCollectionViewCell";
 @interface IMPhotoCollectionViewController ()
 
 @property (nonatomic, assign) NSInteger maxCount;
+
+@property (nonatomic, strong) IMCameraman *cameraman;
 
 @end
 
@@ -95,7 +97,7 @@ static NSString * const CellIdentifier = @"IMPhotoCollectionViewCell";
     }
     __weak typeof(self) weakSelf = self;
     if (indexPath.row == 0) {
-        [self.navigationController takePhotoWithResult:^(UIImage * _Nullable image) {
+        [self.cameraman takePhotoWithFromVC:self.navigationController result:^(UIImage * _Nullable image) {
             if (image && weakSelf.photoSelectEvent) {
                 IMPhoto *photo = [IMPhoto photoWithImage:image];
                 photo.isTakePhoto = YES;
@@ -112,6 +114,13 @@ static NSString * const CellIdentifier = @"IMPhotoCollectionViewCell";
         return [weakSelf.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:index + 1 inSection:0]];
     }];
     [self presentViewController:browserVC animated:YES completion:nil];
+}
+
+- (IMCameraman *)cameraman {
+    if (!_cameraman) {
+        _cameraman = [[IMCameraman alloc] init];
+    }
+    return _cameraman;
 }
 
 @end
