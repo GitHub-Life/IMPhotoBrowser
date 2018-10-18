@@ -1,5 +1,5 @@
 //
-//  IMSinglePhotoPreviewViewController.h
+//  IMPhotoEditingViewController.h
 //  IMPhotoBrowserDemo
 //
 //  Created by 万涛 on 2018/10/17.
@@ -13,7 +13,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IMSinglePhotoPreviewViewController : UIViewController
+@interface IMPhotoEditingViewController : UIViewController
 
 - (instancetype)initWithPhoto:(IMPhoto *)photo browseFinish:(IMPBPhotoBrowseFinishEvent)browseFinish;
 

@@ -1,20 +1,20 @@
 //
-//  IMSinglePhotoPreviewViewController.m
+//  IMPhotoEditingViewController.m
 //  IMPhotoBrowserDemo
 //
 //  Created by 万涛 on 2018/10/17.
 //  Copyright © 2018 iMoon. All rights reserved.
 //
 
-#import "IMSinglePhotoPreviewViewController.h"
+#import "IMPhotoEditingViewController.h"
 #import <Masonry.h>
 #import "IMPhoto.h"
 #import "IMPhotoEditingMaskView.h"
-#import "IMSinglePhotoPreviewFooterView.h"
+#import "IMPhotoEditingFooterView.h"
 
 #define DefaultMaxZoomScale 2.f
 
-@interface IMSinglePhotoPreviewViewController () <UIScrollViewDelegate>
+@interface IMPhotoEditingViewController () <UIScrollViewDelegate>
 
 @property (nonatomic, strong) IMPhoto *photo;
 @property (nonatomic, strong) IMPBPhotoBrowseFinishEvent browseFinish;
@@ -22,14 +22,14 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) IMPhotoEditingMaskView *editingMaskView;
-@property (nonatomic, strong) IMSinglePhotoPreviewFooterView *footerView;
+@property (nonatomic, strong) IMPhotoEditingFooterView *footerView;
 
 @property (nonatomic, assign) CGFloat screenW;
 @property (nonatomic, assign) CGFloat screenH;
 
 @end
 
-@implementation IMSinglePhotoPreviewViewController
+@implementation IMPhotoEditingViewController
 
 - (instancetype)initWithPhoto:(IMPhoto *)photo browseFinish:(nonnull IMPBPhotoBrowseFinishEvent)browseFinish {
     if (self = [super init]) {
@@ -82,7 +82,7 @@
     _editingMaskView = [[IMPhotoEditingMaskView alloc] initWithFrame:CGRectMake(0, 0, _screenW, _screenH)];
     [self.view addSubview:_editingMaskView];
     
-    _footerView = [[IMSinglePhotoPreviewFooterView alloc] init];
+    _footerView = [[IMPhotoEditingFooterView alloc] init];
     [_footerView.cancelBtn addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
     [_footerView.completeBtn addTarget:self action:@selector(complete) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_footerView];

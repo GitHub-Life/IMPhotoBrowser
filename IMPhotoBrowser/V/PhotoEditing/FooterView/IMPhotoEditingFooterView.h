@@ -1,5 +1,5 @@
 //
-//  IMSinglePhotoPreviewFooterView.h
+//  IMPhotoEditingFooterView.h
 //  IMPhotoBrowserDemo
 //
 //  Created by 万涛 on 2018/10/17.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IMSinglePhotoPreviewFooterView : UIView
+@interface IMPhotoEditingFooterView : UIView
 
 @property (nonatomic, strong) UIButton *cancelBtn;
 @property (nonatomic, strong) UIButton *completeBtn;

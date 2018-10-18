@@ -1,17 +1,17 @@
 //
-//  IMSinglePhotoPreviewFooterView.m
+//  IMPhotoEditingFooterView.m
 //  IMPhotoBrowserDemo
 //
 //  Created by 万涛 on 2018/10/17.
 //  Copyright © 2018 iMoon. All rights reserved.
 //
 
-#import "IMSinglePhotoPreviewFooterView.h"
+#import "IMPhotoEditingFooterView.h"
 #import <Masonry.h>
 
 static CGFloat const FooterViewHeight = 44.f;
 
-@implementation IMSinglePhotoPreviewFooterView
+@implementation IMPhotoEditingFooterView
 
 - (instancetype)init {
     if (self = [super init]) {
