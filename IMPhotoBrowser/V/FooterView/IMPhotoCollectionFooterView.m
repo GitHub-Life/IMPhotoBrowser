@@ -34,8 +34,13 @@
     [self addSubview:_previewBtn];
     [_previewBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(0);
-        make.bottom.mas_equalTo(0);
         make.leading.mas_equalTo(0);
+        if (@available(iOS 11.0, *)) {
+            make.bottom.mas_equalTo(self.mas_safeAreaLayoutGuideBottom);
+        } else {
+            make.bottom.mas_equalTo(0);
+        }
+        make.height.mas_equalTo(FooterViewHeight);
     }];
     
     _completeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -48,8 +53,12 @@
     [self addSubview:_completeBtn];
     [_completeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(0);
-        make.bottom.mas_equalTo(0);
         make.trailing.mas_equalTo(0);
+        if (@available(iOS 11.0, *)) {
+            make.bottom.mas_equalTo(self.mas_safeAreaLayoutGuideBottom);
+        } else {
+            make.bottom.mas_equalTo(0);
+        }
     }];
 }
 

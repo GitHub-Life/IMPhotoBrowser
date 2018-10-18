@@ -10,6 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+static CGFloat const FooterViewHeight = 44.f;
+
 @interface IMPhotoCollectionFooterView : UIView
 
 @property (nonatomic, strong) UIButton *previewBtn;

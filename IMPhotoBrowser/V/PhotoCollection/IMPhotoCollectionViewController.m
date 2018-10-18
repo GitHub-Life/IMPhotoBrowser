@@ -11,7 +11,6 @@
 #import "IMCameraman.h"
 #import "IMCameraCollectionViewCell.h"
 #import "IMPhotoCollectionViewCell.h"
-#import "IMPhoto.h"
 
 #import "IMPhotoBrowserViewController.h"
 #import "IMPhotoEditingViewController.h"

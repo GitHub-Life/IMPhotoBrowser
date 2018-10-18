@@ -7,7 +7,6 @@
 //
 
 #import "IMPhotoManager.h"
-#import "IMPhoto.h"
 
 @interface IMPhotoManager ()
 

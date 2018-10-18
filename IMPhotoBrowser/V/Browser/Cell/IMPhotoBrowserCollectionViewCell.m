@@ -7,7 +7,6 @@
 //
 
 #import "IMPhotoBrowserCollectionViewCell.h"
-#import "IMPhoto.h"
 
 #define DefaultMaxZoomScale 2.f
 

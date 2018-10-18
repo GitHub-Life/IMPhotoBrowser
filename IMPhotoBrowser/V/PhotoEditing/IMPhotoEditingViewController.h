@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "IMPBStatement.h"
 #import "IMPhotoBrowserAnimationTransitioning.h"
-@class IMPhoto;
 
 NS_ASSUME_NONNULL_BEGIN
 

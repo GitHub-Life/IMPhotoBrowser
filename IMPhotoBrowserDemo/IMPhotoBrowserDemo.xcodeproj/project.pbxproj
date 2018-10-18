@@ -14,7 +14,7 @@
 		B7206A6B216EEEE200FE745D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B7206A6A216EEEE200FE745D /* Assets.xcassets */; };
 		B7206A6E216EEEE200FE745D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7206A6C216EEEE200FE745D /* LaunchScreen.storyboard */; };
 		B7206A71216EEEE200FE745D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B7206A70216EEEE200FE745D /* main.m */; };
-		B73977D92175B6550052B7CF /* IMPhotoPickerContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977992175B6550052B7CF /* IMPhotoPickerContainerViewController.m */; };
+		B73977D92175B6550052B7CF /* IMPhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977992175B6550052B7CF /* IMPhotoPickerViewController.m */; };
 		B73977DB2175B6550052B7CF /* UIViewController+IMAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = B739779D2175B6550052B7CF /* UIViewController+IMAlert.m */; };
 		B73977DD2175B6550052B7CF /* IMPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977A52175B6550052B7CF /* IMPhotoManager.m */; };
 		B73977DE2175B6550052B7CF /* IMPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977A92175B6550052B7CF /* IMPhoto.m */; };
@@ -34,7 +34,6 @@
 		B73977ED2175B6550052B7CF /* IMPhotoBrowserAnimationTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977D52175B6550052B7CF /* IMPhotoBrowserAnimationTransitioning.m */; };
 		B73977EE2175B6550052B7CF /* IMBaseAnimationTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = B73977D82175B6550052B7CF /* IMBaseAnimationTransitioning.m */; };
 		B73BB5AB2176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B73BB5AA2176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.m */; };
-		B75C88962171EAD7004531AC /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B75C88952171EAD7004531AC /* CollectionViewController.m */; };
 		B7F593D4217724E9006CF135 /* IMCameraman.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F593D3217724E9006CF135 /* IMCameraman.m */; };
 		B7F594A621773273006CF135 /* IMCameraCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F594A521773273006CF135 /* IMCameraCollectionViewCell.m */; };
 		B7F594AA21773822006CF135 /* IMPhotoEditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7F594A921773822006CF135 /* IMPhotoEditingViewController.m */; };
@@ -56,13 +55,13 @@
 		B7206A6D216EEEE200FE745D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B7206A6F216EEEE200FE745D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B7206A70216EEEE200FE745D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		B73977992175B6550052B7CF /* IMPhotoPickerContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMPhotoPickerContainerViewController.m; sourceTree = "<group>"; };
+		B73977992175B6550052B7CF /* IMPhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMPhotoPickerViewController.m; sourceTree = "<group>"; };
 		B739779B2175B6550052B7CF /* UIViewController+IMAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+IMAlert.h"; sourceTree = "<group>"; };
 		B739779D2175B6550052B7CF /* UIViewController+IMAlert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+IMAlert.m"; sourceTree = "<group>"; };
 		B73977A32175B6550052B7CF /* IMPBStatement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMPBStatement.h; sourceTree = "<group>"; };
 		B73977A52175B6550052B7CF /* IMPhotoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMPhotoManager.m; sourceTree = "<group>"; };
 		B73977A62175B6550052B7CF /* IMPhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMPhotoManager.h; sourceTree = "<group>"; };
-		B73977A72175B6550052B7CF /* IMPhotoPickerContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMPhotoPickerContainerViewController.h; sourceTree = "<group>"; };
+		B73977A72175B6550052B7CF /* IMPhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMPhotoPickerViewController.h; sourceTree = "<group>"; };
 		B73977A92175B6550052B7CF /* IMPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMPhoto.m; sourceTree = "<group>"; };
 		B73977AA2175B6550052B7CF /* IMPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMPhoto.h; sourceTree = "<group>"; };
 		B73977AD2175B6550052B7CF /* IMPhotoCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMPhotoCollectionViewController.m; sourceTree = "<group>"; };
@@ -95,8 +94,7 @@
 		B73977D82175B6550052B7CF /* IMBaseAnimationTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMBaseAnimationTransitioning.m; sourceTree = "<group>"; };
 		B73BB5A92176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMNetworkPhotoBrowserViewController.h; sourceTree = "<group>"; };
 		B73BB5AA2176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMNetworkPhotoBrowserViewController.m; sourceTree = "<group>"; };
-		B75C88942171EAD7004531AC /* CollectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
-		B75C88952171EAD7004531AC /* CollectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
+		B7439906217872E200C73CD8 /* IMPhotoBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMPhotoBrowser.h; sourceTree = "<group>"; };
 		B7F593D2217724E9006CF135 /* IMCameraman.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMCameraman.h; sourceTree = "<group>"; };
 		B7F593D3217724E9006CF135 /* IMCameraman.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IMCameraman.m; sourceTree = "<group>"; };
 		B7F594A421773273006CF135 /* IMCameraCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IMCameraCollectionViewCell.h; sourceTree = "<group>"; };
@@ -165,8 +163,6 @@
 				B7206A77216EEEEA00FE745D /* Resources */,
 				B7206A64216EEEE100FE745D /* ViewController.h */,
 				B7206A65216EEEE100FE745D /* ViewController.m */,
-				B75C88942171EAD7004531AC /* CollectionViewController.h */,
-				B75C88952171EAD7004531AC /* CollectionViewController.m */,
 				B7206A67216EEEE100FE745D /* Main.storyboard */,
 			);
 			path = IMPhotoBrowserDemo;
@@ -195,11 +191,12 @@
 		B73977982175B6550052B7CF /* IMPhotoBrowser */ = {
 			isa = PBXGroup;
 			children = (
-				B73977992175B6550052B7CF /* IMPhotoPickerContainerViewController.m */,
+				B7439906217872E200C73CD8 /* IMPhotoBrowser.h */,
+				B73977992175B6550052B7CF /* IMPhotoPickerViewController.m */,
 				B739779A2175B6550052B7CF /* Extension */,
 				B739779F2175B6550052B7CF /* Utils */,
 				B73977A22175B6550052B7CF /* VM */,
-				B73977A72175B6550052B7CF /* IMPhotoPickerContainerViewController.h */,
+				B73977A72175B6550052B7CF /* IMPhotoPickerViewController.h */,
 				B73977A82175B6550052B7CF /* M */,
 				B73977AB2175B6550052B7CF /* V */,
 			);
@@ -600,7 +597,6 @@
 				B73977DF2175B6550052B7CF /* IMPhotoCollectionViewController.m in Sources */,
 				B73BB5AB2176CA3E00A2E17A /* IMNetworkPhotoBrowserViewController.m in Sources */,
 				B7F594A621773273006CF135 /* IMCameraCollectionViewCell.m in Sources */,
-				B75C88962171EAD7004531AC /* CollectionViewController.m in Sources */,
 				B7F594B22177533D006CF135 /* IMPhotoEditingMaskView.m in Sources */,
 				B73977E92175B6550052B7CF /* IMPhotoBrowserHeaderView.m in Sources */,
 				B73977DE2175B6550052B7CF /* IMPhoto.m in Sources */,
@@ -613,7 +609,7 @@
 				B73977DB2175B6550052B7CF /* UIViewController+IMAlert.m in Sources */,
 				B7F594AE21773B61006CF135 /* IMPhotoEditingFooterView.m in Sources */,
 				B73977E42175B6550052B7CF /* IMPBCloseButton.m in Sources */,
-				B73977D92175B6550052B7CF /* IMPhotoPickerContainerViewController.m in Sources */,
+				B73977D92175B6550052B7CF /* IMPhotoPickerViewController.m in Sources */,
 				B7F594AA21773822006CF135 /* IMPhotoEditingViewController.m in Sources */,
 				B73977E12175B6550052B7CF /* IMPhotoCollectionViewCell.m in Sources */,
 				B73977E52175B6550052B7CF /* IMPhotoAlbumTableViewController.m in Sources */,

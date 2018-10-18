@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "IMPBStatement.h"
-@class IMPhoto;
 
 NS_ASSUME_NONNULL_BEGIN
 

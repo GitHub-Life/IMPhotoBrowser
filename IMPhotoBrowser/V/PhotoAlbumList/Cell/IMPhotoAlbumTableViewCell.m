@@ -7,7 +7,6 @@
 //
 
 #import "IMPhotoAlbumTableViewCell.h"
-#import <Photos/Photos.h>
 #import "IMPBStatement.h"
 
 @interface IMPhotoAlbumTableViewCell ()

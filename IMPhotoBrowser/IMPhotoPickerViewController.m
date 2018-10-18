@@ -1,24 +1,20 @@
 //
-//  IMPhotoPickerContainerViewController.m
+//  IMPhotoPickerViewController.m
 //  IMPhotoBrowserDemo
 //
 //  Created by 万涛 on 2018/10/11.
 //  Copyright © 2018 iMoon. All rights reserved.
 //
 
-#import "IMPhotoPickerContainerViewController.h"
+#import "IMPhotoPickerViewController.h"
 #import <Masonry.h>
-#import "IMPhotoManager.h"
-#import "IMPhoto.h"
 
 #import "IMPhotoCollectionFooterView.h"
 #import "IMPhotoCollectionViewController.h"
 #import "IMPhotoAlbumTableViewController.h"
 #import "IMPhotoBrowserViewController.h"
 
-static CGFloat const FooterViewHeight = 44.f;
-
-@interface IMPhotoPickerContainerViewController ()
+@interface IMPhotoPickerViewController ()
 
 @property (nonatomic, assign) BOOL allowsEditing;
 @property (nonatomic, strong) IMPBPhotoSelectedEvent singleSelectedEvent;
@@ -41,7 +37,7 @@ static CGFloat const FooterViewHeight = 44.f;
 
 @end
 
-@implementation IMPhotoPickerContainerViewController
+@implementation IMPhotoPickerViewController
 
 #pragma mark - 初始化
 - (instancetype)initWithPhotoMaxCount:(NSInteger)maxCount multiSelectedEvent:(nonnull IMPBPhotoArraySelectedEvent)multiSelectedEvent {
@@ -142,7 +138,7 @@ static CGFloat const FooterViewHeight = 44.f;
             make.top.mas_equalTo(weakSelf.view.mas_safeAreaLayoutGuideTop);
             make.left.mas_equalTo(weakSelf.view.mas_safeAreaLayoutGuideLeft);
             make.right.mas_equalTo(weakSelf.view.mas_safeAreaLayoutGuideRight);
-            make.bottom.mas_equalTo(weakSelf.view.mas_safeAreaLayoutGuideBottom);
+            make.bottom.mas_equalTo(0);
         } else {
             make.edges.mas_equalTo(UIEdgeInsetsMake(CGRectGetHeight(UIApplication.sharedApplication.statusBarFrame) + 44.f, 0, 0, 0));
         }
@@ -153,11 +149,7 @@ static CGFloat const FooterViewHeight = 44.f;
     NSArray<IMPhoto *> *photoArray = [IMPhotoManager getPhotoArrayWithAssetCollection:self.currentCollection];
     self.allPhotoDatas[self.currentCollection.localIdentifier] = photoArray;
     self.photoCollectionVC.photoArray = photoArray;
-    if (@available(iOS 11.0, *)) {
-        [self.photoCollectionVC.collectionView setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
-    } else {
-        [self setAutomaticallyAdjustsScrollViewInsets:NO];
-    }
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];
 }
 
 - (void)setFooterView {
@@ -170,7 +162,6 @@ static CGFloat const FooterViewHeight = 44.f;
             make.leading.mas_equalTo(0);
             make.trailing.mas_equalTo(0);
             make.bottom.mas_equalTo(0);
-            make.height.mas_equalTo(FooterViewHeight);
         }];
     }
 }
@@ -213,7 +204,14 @@ static CGFloat const FooterViewHeight = 44.f;
             if (weakSelf.allowsEditing) {
                 make.edges.mas_equalTo(UIEdgeInsetsZero);
             } else {
-                make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, FooterViewHeight, 0));
+                if (@available(iOS 11.0, *)) {
+                    make.top.mas_equalTo(0);
+                    make.leading.mas_equalTo(0);
+                    make.trailing.mas_equalTo(0);
+                    make.bottom.mas_equalTo(weakSelf.view.mas_safeAreaLayoutGuideBottom).mas_offset(-FooterViewHeight);
+                } else {
+                    make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, FooterViewHeight, 0));
+                }
             }
         }];
         [_photoCollectionVC setPhotoSelectEvent:self.photoSelectEvent];

@@ -8,7 +8,6 @@
 
 #import "IMPhotoEditingViewController.h"
 #import <Masonry.h>
-#import "IMPhoto.h"
 #import "IMPhotoEditingMaskView.h"
 #import "IMPhotoEditingFooterView.h"
 

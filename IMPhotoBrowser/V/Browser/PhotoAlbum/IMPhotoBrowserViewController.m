@@ -12,7 +12,6 @@
 #import "IMPhotoBrowserCollectionView.h"
 #import "IMPhotoBrowserHeaderView.h"
 #import "IMPBSelectedStateButton.h"
-#import "IMPhoto.h"
 
 @interface IMPhotoBrowserViewController ()
 
@@ -78,10 +77,15 @@
     if (!_selectedStateBtn) {
         _selectedStateBtn = [IMPBSelectedStateButton buttonWithType:UIButtonTypeCustom];
         [self.view addSubview:_selectedStateBtn];
+        __weak typeof(self) weakSelf = self;
         [_selectedStateBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.size.mas_equalTo(CGSizeMake(50.f, 50.f));
             make.trailing.mas_equalTo(0);
-            make.bottom.mas_equalTo(0);
+            if (@available(iOS 11.0, *)) {
+                make.bottom.mas_equalTo(weakSelf.view.mas_safeAreaLayoutGuideBottom);
+            } else {
+                make.bottom.mas_equalTo(0);
+            }
         }];
         [_selectedStateBtn addTarget:self action:@selector(selectStateBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -138,7 +142,7 @@
         [UIApplication.sharedApplication setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
         [UIView animateWithDuration:0.3 animations:^{
             self.headerView.transform = CGAffineTransformMakeTranslation(0, -CGRectGetHeight(self.headerView.bounds));
-            self.selectedStateBtn.transform = CGAffineTransformMakeTranslation(0, CGRectGetHeight(self.selectedStateBtn.bounds));
+            self.selectedStateBtn.transform = CGAffineTransformMakeTranslation(CGRectGetWidth(self.selectedStateBtn.bounds), 0);
             [self.view setBackgroundColor:UIColor.blackColor];
         } completion:^(BOOL finished) {
             self.headerView.hidden = YES;

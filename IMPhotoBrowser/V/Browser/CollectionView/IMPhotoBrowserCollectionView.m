@@ -8,8 +8,6 @@
 
 #import "IMPhotoBrowserCollectionView.h"
 #import "IMPhotoBrowserCollectionViewCell.h"
-#import "IMPhotoManager.h"
-#import "IMPhoto.h"
 
 static NSString *CellIdentifier = @"IMPhotoBrowserCollectionViewCell";
 

@@ -7,7 +7,6 @@
 //
 
 #import "IMPhotoCollectionViewCell.h"
-#import "IMPhoto.h"
 
 @interface IMPhotoCollectionViewCell ()
 

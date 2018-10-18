@@ -1,5 +1,5 @@
 //
-//  IMPhotoPickerContainerViewController.h
+//  IMPhotoPickerViewController.h
 //  IMPhotoBrowserDemo
 //
 //  Created by 万涛 on 2018/10/11.
@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IMPhotoPickerContainerViewController : UIViewController
+@interface IMPhotoPickerViewController : UIViewController
 
 - (instancetype)initWithPhotoMaxCount:(NSInteger)maxCount multiSelectedEvent:(IMPBPhotoArraySelectedEvent)multiSelectedEvent;
 

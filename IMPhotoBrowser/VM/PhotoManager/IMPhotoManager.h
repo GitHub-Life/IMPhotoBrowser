@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "IMPBStatement.h"
 @class PHAssetCollection;
-@class IMPhoto;
 @class UIViewController;
 
 NS_ASSUME_NONNULL_BEGIN
