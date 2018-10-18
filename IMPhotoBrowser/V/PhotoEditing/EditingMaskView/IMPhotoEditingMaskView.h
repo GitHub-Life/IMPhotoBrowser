@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign, readonly) CGRect clipRect;
 
+@property (nonatomic, assign) BOOL hideArrow;
+
 @end
 
 NS_ASSUME_NONNULL_END

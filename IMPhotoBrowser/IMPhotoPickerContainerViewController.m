@@ -153,6 +153,11 @@ static CGFloat const FooterViewHeight = 44.f;
     NSArray<IMPhoto *> *photoArray = [IMPhotoManager getPhotoArrayWithAssetCollection:self.currentCollection];
     self.allPhotoDatas[self.currentCollection.localIdentifier] = photoArray;
     self.photoCollectionVC.photoArray = photoArray;
+    if (@available(iOS 11.0, *)) {
+        [self.photoCollectionVC.collectionView setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
+    } else {
+        [self setAutomaticallyAdjustsScrollViewInsets:NO];
+    }
 }
 
 - (void)setFooterView {

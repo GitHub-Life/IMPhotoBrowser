@@ -14,7 +14,7 @@
 #import "IMPhoto.h"
 
 #import "IMPhotoBrowserViewController.h"
-#import "IMSinglePhotoPreviewViewController.h"
+#import "IMPhotoEditingViewController.h"
 
 static NSInteger ColumnCount = 4;
 static NSString * const CameraCellIdentifier = @"CameraCellIdentifier";
@@ -112,7 +112,7 @@ static NSString * const PhotoCellIdentifier = @"IMPhotoCollectionViewCell";
     }
     
     if (self.allowsEditing) {
-        IMSinglePhotoPreviewViewController *previewVC = [[IMSinglePhotoPreviewViewController alloc] initWithPhoto:self.photoArray[indexPath.row - 1] browseFinish:self.browseFinish];
+        IMPhotoEditingViewController *previewVC = [[IMPhotoEditingViewController alloc] initWithPhoto:self.photoArray[indexPath.row - 1] browseFinish:self.browseFinish];
         [previewVC.animationTransitioning setOriginalViewBlock:^UIView *(NSInteger index) {
             return [weakSelf.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:index + 1 inSection:0]];
         }];

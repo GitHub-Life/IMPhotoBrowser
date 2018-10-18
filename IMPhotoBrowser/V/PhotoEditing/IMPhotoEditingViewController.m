@@ -92,10 +92,15 @@
         make.bottom.mas_equalTo(0);
     }];
     
+    UITapGestureRecognizer *singleTapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapEvent:)];
+    singleTapGr.numberOfTapsRequired = 1;
+    singleTapGr.numberOfTouchesRequired = 1;
+    [self.view addGestureRecognizer:singleTapGr];
     UITapGestureRecognizer *doubleTapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapEvent:)];
     doubleTapGr.numberOfTapsRequired = 2;
     doubleTapGr.numberOfTouchesRequired = 1;
     [self.view addGestureRecognizer:doubleTapGr];
+    [singleTapGr requireGestureRecognizerToFail:doubleTapGr];
     [self showPhoto];
 }
 
@@ -153,6 +158,25 @@
 
 
 #pragma mark - 自定义手势
+- (void)singleTapEvent:(UITapGestureRecognizer *)tapGr {
+    if (self.footerView.hidden) {
+        self.footerView.hidden = NO;
+        [UIView animateWithDuration:0.3f animations:^{
+            self.footerView.transform = CGAffineTransformIdentity;
+        }];
+        self.editingMaskView.hideArrow = NO;
+        [UIApplication.sharedApplication setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+    } else {
+        [UIView animateWithDuration:0.3f animations:^{
+            self.footerView.transform = CGAffineTransformMakeTranslation(0, CGRectGetHeight(self.footerView.bounds));
+        } completion:^(BOOL finished) {
+            self.footerView.hidden = YES;
+        }];
+        self.editingMaskView.hideArrow = YES;
+        [UIApplication.sharedApplication setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+    }
+}
+
 - (void)doubleTapEvent:(UITapGestureRecognizer *)tapGr {
     if (self.scrollView.zoomScale >= self.scrollView.maximumZoomScale) {
         [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
@@ -164,26 +188,25 @@
 #pragma mark - 完成
 - (void)complete {
     [self close];
-    CGRect clipRect = [self.editingMaskView convertRect:self.editingMaskView.clipRect toView:self.view];
-    _photo.image = [self imageWithView:self.view clipRect:clipRect];
-    _photo.thumbImage = _photo.image;
+    CGRect clipRect = [self.editingMaskView convertRect:self.editingMaskView.clipRect toView:self.imageView];
+    CGFloat radio = self.imageView.image.size.width / CGRectGetWidth(self.imageView.bounds);
+    clipRect = CGRectMake(clipRect.origin.x * radio, clipRect.origin.y * radio, clipRect.size.width * radio, clipRect.size.height * radio);
+    UIImage *image = [UIImage imageWithCGImage:CGImageCreateWithImageInRect(self.imageView.image.CGImage, clipRect)];
+    _photo.image = image;
+    _photo.thumbImage = image;
     if (_browseFinish) {
         _browseFinish(_photo.index);
     }
 }
 
-- (UIImage *)imageWithView:(UIView *)view clipRect:(CGRect)clipRect {
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size, YES, 0);
-    UIRectClip(clipRect);
-    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return img;
-}
-
 #pragma mark - 关闭
 - (void)close {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [UIApplication.sharedApplication setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
 }
 
 @end
