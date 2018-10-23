@@ -50,6 +50,10 @@
             [IMPhotoManager checkPhotoLibraryPermissionsWithFromVC:self GrantedBlock:^{
                 IMPhotoPickerViewController *pickerVC = [[IMPhotoPickerViewController alloc] initWithPhotoMaxCount:5 multiSelectedEvent:^(NSArray<IMPhoto *> *photoArray) {
                     weakSelf.photoArray = photoArray;
+                    // IMPhoto数组 → UIImage数组
+//                    [IMPhotoManager imageArrayWithPhotoArray:photoArray complete:^(NSArray<UIImage *> * _Nonnull imageArray) {
+//                        <#code#>
+//                    }];
                 }];
                 [weakSelf presentViewController:[[UINavigationController alloc] initWithRootViewController:pickerVC] animated:YES completion:nil];
             }];

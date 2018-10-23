@@ -126,7 +126,7 @@
     }
 }
 
-#pragma mark - 由IMPhoto数组获取UIImage数组
+#pragma mark - IMPhoto数组 → UIImage数组
 + (void)imageArrayWithPhotoArray:(NSArray<IMPhoto *> *)photoArray complete:(nonnull void (^)(NSArray<UIImage *> * _Nonnull))complete {
     NSMutableDictionary *tempDict = [NSMutableDictionary dictionaryWithCapacity:photoArray.count];
     for (IMPhoto *photo in photoArray) {

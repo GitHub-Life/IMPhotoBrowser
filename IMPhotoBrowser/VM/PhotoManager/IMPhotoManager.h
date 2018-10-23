@@ -34,6 +34,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)checkPhotoLibraryPermissionsWithFromVC:(UIViewController *)fromVC GrantedBlock:(void(^)(void))grantedBlock;
 
+/**
+ IMPhoto数组 → UIImage数组
+ @param photoArray IMPhoto数组
+ @param complete 得到UIImage数组回调
+ */
 + (void)imageArrayWithPhotoArray:(NSArray<IMPhoto *> *)photoArray complete:(void(^)(NSArray<UIImage *> *imageArray))complete;
 
 @end
