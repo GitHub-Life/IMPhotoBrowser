@@ -126,4 +126,21 @@
     }
 }
 
+#pragma mark - 由IMPhoto数组获取UIImage数组
++ (void)imageArrayWithPhotoArray:(NSArray<IMPhoto *> *)photoArray complete:(nonnull void (^)(NSArray<UIImage *> * _Nonnull))complete {
+    NSMutableDictionary *tempDict = [NSMutableDictionary dictionaryWithCapacity:photoArray.count];
+    for (IMPhoto *photo in photoArray) {
+        [photo getImageWithResult:^(UIImage * _Nullable image) {
+            tempDict[photo.asset.localIdentifier] = image;
+            if (tempDict.count >= photoArray.count) {
+                NSMutableArray *imageArray = [NSMutableArray arrayWithCapacity:photoArray.count];
+                for (IMPhoto *p in photoArray) {
+                    [imageArray addObject:tempDict[p.asset.localIdentifier]];
+                }
+                complete(imageArray.copy);
+            }
+        }];
+    }
+}
+
 @end

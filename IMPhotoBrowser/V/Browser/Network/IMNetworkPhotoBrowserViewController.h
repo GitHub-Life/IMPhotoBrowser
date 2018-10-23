@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "IMPhotoBrowserAnimationTransitioning.h"
+#import "IMPhotoBrowserParameter.h"
 @class IMPhoto;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -17,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) IMPhotoBrowserAnimationTransitioning *animationTransitioning;
 
 - (instancetype)initWithPhotoArray:(NSArray<IMPhoto *> *)photoArray currentIndex:(NSInteger)currentIndex;
+
++ (void)browserPhotoWithParameter:(IMPhotoBrowserParameter *)parameter;
 
 @end
 

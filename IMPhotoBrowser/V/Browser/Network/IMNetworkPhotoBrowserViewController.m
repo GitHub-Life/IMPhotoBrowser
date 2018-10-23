@@ -22,6 +22,23 @@
 
 @implementation IMNetworkPhotoBrowserViewController
 
++ (void)browserPhotoWithParameter:(IMPhotoBrowserParameter *)parameter {
+    NSMutableArray<IMPhoto *> *photoArray = [NSMutableArray array];
+    if (parameter.imageArray.count) {
+        for (UIImage *image in parameter.imageArray) {
+            [photoArray addObject:[IMPhoto photoWithImage:image]];
+        }
+    } else if (parameter.imageUrlStrArray.count) {
+        for (NSString *imageUrlStr in parameter.imageUrlStrArray) {
+            [photoArray addObject:[IMPhoto photoWithImageUrlStr:imageUrlStr thumbSuffix:parameter.thumbSuffix]];
+        }
+    }
+    if (!photoArray.count) return;
+    IMNetworkPhotoBrowserViewController *browserVC = [[IMNetworkPhotoBrowserViewController alloc] initWithPhotoArray:photoArray currentIndex:parameter.currentIndex];
+    browserVC.animationTransitioning.originalViewBlock = parameter.originalViewBlock;
+    [parameter.callerVC presentViewController:browserVC animated:YES completion:nil];
+}
+
 #pragma mark - 初始化
 - (instancetype)initWithPhotoArray:(NSArray<IMPhoto *> *)photoArray currentIndex:(NSInteger)currentIndex {
     if (self = [super init]) {

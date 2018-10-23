@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)photoWithAsset:(PHAsset *)asset;
 + (instancetype)photoWithImage:(UIImage *)image;
 + (instancetype)photoWithImageUrlStr:(NSString *)imageUrlStr;
++ (instancetype)photoWithImageUrlStr:(NSString *)imageUrlStr thumbSuffix:(NSString *)thumbSuffix;
 
 /** 是否是拍照而来 */
 @property (nonatomic, assign) BOOL isTakePhoto;

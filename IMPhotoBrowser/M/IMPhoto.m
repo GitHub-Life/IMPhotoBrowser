@@ -32,6 +32,13 @@
     return photo;
 }
 
++ (instancetype)photoWithImageUrlStr:(NSString *)imageUrlStr thumbSuffix:(nonnull NSString *)thumbSuffix {
+    IMPhoto *photo = [[IMPhoto alloc] init];
+    photo.imageUrlStr = imageUrlStr;
+    photo.thumbSuffix = thumbSuffix;
+    return photo;
+}
+
 #pragma mark - 获取 Image
 - (void)getImageWithResult:(void (^)(UIImage * _Nullable))resultBlock {
     if (!resultBlock) return;
@@ -47,7 +54,9 @@
 - (void)getImageByAssetWithResult:(void (^)(UIImage * _Nullable))resultBlock {
     if (!_asset || !resultBlock) return;
     [PHImageManager.defaultManager requestImageForAsset:_asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeDefault options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-        resultBlock(result);
+        if (![info[@"PHImageResultIsDegradedKey"] boolValue]) {
+            resultBlock(result);
+        }
     }];
 }
 

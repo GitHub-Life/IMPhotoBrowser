@@ -34,6 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)checkPhotoLibraryPermissionsWithFromVC:(UIViewController *)fromVC GrantedBlock:(void(^)(void))grantedBlock;
 
++ (void)imageArrayWithPhotoArray:(NSArray<IMPhoto *> *)photoArray complete:(void(^)(NSArray<UIImage *> *imageArray))complete;
+
 @end
 
 NS_ASSUME_NONNULL_END

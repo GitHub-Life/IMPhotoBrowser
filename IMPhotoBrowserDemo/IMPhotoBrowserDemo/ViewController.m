@@ -78,6 +78,7 @@ static NSString *const CellIdentifier = @"CellIdentifier";
     UIImageView *imgView = [cell viewWithTag:100];
     if (!imgView) {
         imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, _itemSize, _itemSize)];
+        imgView.clipsToBounds = YES;
         [imgView setTag:100];
         [imgView setContentMode:UIViewContentModeScaleAspectFill];
         [cell addSubview:imgView];

@@ -76,6 +76,12 @@
 }
 
 - (void)updateCurrentIndex {
+    if (_totalCount <= 1) {
+        if (!_countLabel.hidden) {
+            _countLabel.hidden = YES;
+        }
+        return;
+    }
     if (_countLabel) {
         _countLabel.text = [NSString stringWithFormat:@"%d / %d", (int)(self.currentIndex + 1), (int)self.totalCount];
     }

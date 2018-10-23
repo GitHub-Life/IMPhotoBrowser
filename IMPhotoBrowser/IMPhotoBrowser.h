@@ -10,6 +10,7 @@
 #define IMPhotoBrowser_h
 
 #import "IMPBStatement.h"
+#import "IMPhotoBrowserParameter.h"
 #import "IMPhotoPickerViewController.h"
 #import "IMPhotoEditingViewController.h"
 #import "IMNetworkPhotoBrowserViewController.h"
