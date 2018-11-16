@@ -1,5 +1,5 @@
 //
-//  IMPBCloseButton.h
+//  IMPBXButton.h
 //  IMPhotoBrowserDemo
 //
 //  Created by 万涛 on 2018/10/15.
@@ -10,7 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IMPBCloseButton : UIButton
+@interface IMPBXButton : UIButton
+
+@property (nonatomic, assign) IBInspectable CGFloat xRedius;
 
 @end
 

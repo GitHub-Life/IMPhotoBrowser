@@ -26,7 +26,6 @@
 @property (nonatomic, strong) IMPhotoCollectionFooterView *footerView;
 @property (nonatomic, strong) IMPhotoCollectionViewController *photoCollectionVC;
 @property (nonatomic, strong) IMPhotoAlbumTableViewController *photoAlbumTableVC;
-@property (nonatomic, strong) UIView *albumTableBgView;
 
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSArray<IMPhoto *> *> *allPhotoDatas;
 
@@ -76,16 +75,14 @@
     if (!_photoSelectEvent) {
         __weak typeof(self) weakSelf = self;
         _photoSelectEvent = ^NSInteger(IMPhoto *photo) {
-            if (photo.isTakePhoto) {
-                if (weakSelf.allowsEditing) {
-                    if (weakSelf.singleSelectedEvent) {
-                        weakSelf.singleSelectedEvent(photo);
-                    }
-                    [weakSelf cancelBack];
-                } else {
-                    [weakSelf.selectedPhotoArray addObject:photo];
-                    [weakSelf complete];
+            if (photo.isEditing) {
+                if (weakSelf.singleSelectedEvent) {
+                    weakSelf.singleSelectedEvent(photo);
                 }
+                [weakSelf cancelBack];
+            } else if (photo.isTakePhoto) {
+                [weakSelf.selectedPhotoArray addObject:photo];
+                [weakSelf complete];
             } else {
                 if (photo.selected && ![weakSelf.selectedPhotoArray containsObject:photo]) {
                     if (weakSelf.selectedPhotoArray.count >= self.maxCount) return -1;
@@ -224,18 +221,14 @@
 #pragma mark - 相册列表
 - (IMPhotoAlbumTableViewController *)photoAlbumTableVC {
     if (!_photoAlbumTableVC) {
-        _albumTableBgView = [[UIView alloc] init];
-        _albumTableBgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.33];
-        _albumTableBgView.alpha = 0;
-        _albumTableBgView.hidden = YES;
-        [_containerView addSubview:_albumTableBgView];
-        [_albumTableBgView mas_makeConstraints:^(MASConstraintMaker *make) {
+        _photoAlbumTableVC = [[IMPhotoAlbumTableViewController alloc] init];
+        [_containerView addSubview:_photoAlbumTableVC.bgView];
+        [_photoAlbumTableVC.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(UIEdgeInsetsZero);
         }];
         
-        _photoAlbumTableVC = [[IMPhotoAlbumTableViewController alloc] init];
         _photoAlbumTableVC.tableView.hidden = YES;
-        [_containerView addSubview:_photoAlbumTableVC.tableView];
+        [_photoAlbumTableVC.bgView addSubview:_photoAlbumTableVC.tableView];
         [_photoAlbumTableVC.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, 100, 0));
         }];
@@ -263,19 +256,19 @@
     if (self.photoAlbumTableVC.tableView.hidden) {
         self.navigationItem.title = [NSString stringWithFormat:@"%@ ▲", self.currentCollection.localizedTitle];
         self.photoAlbumTableVC.tableView.hidden = NO;
-        self.albumTableBgView.hidden = NO;
+        self.photoAlbumTableVC.bgView.hidden = NO;
         [UIView animateWithDuration:0.3f delay:0.f usingSpringWithDamping:0.8f initialSpringVelocity:1.f options:UIViewAnimationOptionCurveEaseInOut animations:^{
             self.photoAlbumTableVC.tableView.transform = CGAffineTransformIdentity;
-            self.albumTableBgView.alpha = 1;
+            self.photoAlbumTableVC.bgView.alpha = 1;
         } completion:nil];
     } else {
         self.navigationItem.title = [NSString stringWithFormat:@"%@ ▼", self.currentCollection.localizedTitle];
         [UIView animateWithDuration:0.3 animations:^{
             self.photoAlbumTableVC.tableView.transform = CGAffineTransformMakeTranslation(0, -CGRectGetHeight(self.photoAlbumTableVC.tableView.bounds));
-            self.albumTableBgView.alpha = 0;
+            self.photoAlbumTableVC.bgView.alpha = 0;
         } completion:^(BOOL finished) {
             self.photoAlbumTableVC.tableView.hidden = YES;
-            self.albumTableBgView.hidden = YES;
+            self.photoAlbumTableVC.bgView.hidden = YES;
         }];
     }
 }

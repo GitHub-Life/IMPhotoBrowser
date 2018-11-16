@@ -25,4 +25,11 @@
     return parameter;
 }
 
++ (instancetype)parameterWithPhotoArray:(NSArray<IMPhoto *> *)photoArray currentIndex:(NSInteger)currentIndex {
+    IMPhotoBrowserParameter *parameter = [[IMPhotoBrowserParameter alloc] init];
+    parameter.photoArray = photoArray;
+    parameter.currentIndex = currentIndex;
+    return parameter;
+}
+
 @end

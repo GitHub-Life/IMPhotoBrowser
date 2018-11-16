@@ -21,7 +21,7 @@ static CGFloat const FooterViewHeight = 44.f;
 }
 
 - (void)initSettings {
-    self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.33f];
+//    self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.33f];
     
     _cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _cancelBtn.titleLabel.font = [UIFont systemFontOfSize:15.f];

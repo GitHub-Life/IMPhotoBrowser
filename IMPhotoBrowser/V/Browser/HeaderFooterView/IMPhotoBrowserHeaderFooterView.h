@@ -1,5 +1,5 @@
 //
-//  IMPhotoBrowserHeaderView.h
+//  IMPhotoBrowserHeaderFooterView.h
 //  IMPhotoBrowserDemo
 //
 //  Created by 万涛 on 2018/10/15.
@@ -10,9 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-static CGFloat const HeaderViewHeight = 44.f;
-
-@interface IMPhotoBrowserHeaderView : UIView
+@interface IMPhotoBrowserHeaderFooterView : UIView
 
 - (instancetype)initWithTotalCount:(NSInteger)totalCount;
 
@@ -22,6 +20,9 @@ static CGFloat const HeaderViewHeight = 44.f;
 @property (nonatomic, strong) UIButton *closeBtn;
 @property (nonatomic, strong) UILabel *countLabel;
 @property (nonatomic, strong) UIButton *rightBtn;
+
+/** 是显示于底部，否则显示于顶部 */
+@property (nonatomic, assign) BOOL isFooter;
 
 - (void)addToTargetView:(UIView *)targetView;
 

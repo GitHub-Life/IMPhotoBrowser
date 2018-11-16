@@ -96,13 +96,16 @@
 }
 
 #pragma mark - 检查相册存取权限
-+ (void)checkPhotoLibraryPermissionsWithFromVC:(UIViewController *)fromVC GrantedBlock:(void(^)(void))grantedBlock {
++ (void)checkPhotoLibraryPermissionsWithFromVC:(UIViewController *)fromVC grantedBlock:(void(^)(void))grantedBlock {
     switch (PHPhotoLibrary.authorizationStatus) {
         case PHAuthorizationStatusNotDetermined: {
             [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
                 if (status == PHAuthorizationStatusAuthorized) {
                     if (grantedBlock) {
-                        grantedBlock();
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            // 这里延时，是因为界面上还有些任务尚未完成，不能立即跳转页面，否则会报 “waitUntilAllTasksAreFinished” 异常
+                            grantedBlock();
+                        });
                     }
                 }
             }];
@@ -128,6 +131,7 @@
 
 #pragma mark - IMPhoto数组 → UIImage数组
 + (void)imageArrayWithPhotoArray:(NSArray<IMPhoto *> *)photoArray complete:(nonnull void (^)(NSArray<UIImage *> * _Nonnull))complete {
+    if (!complete) return;
     NSMutableDictionary *tempDict = [NSMutableDictionary dictionaryWithCapacity:photoArray.count];
     for (IMPhoto *photo in photoArray) {
         [photo getImageWithResult:^(UIImage * _Nullable image) {
@@ -141,6 +145,53 @@
             }
         }];
     }
+}
+
+#pragma mark - 从photoArray 元素IMPhoto中的PHAsset获取UIImage，获取成功后赋值到IMPhoto中的image属性
++ (void)getImagesWithPhotoArray:(NSArray<IMPhoto *> *)photoArray complete:(void (^)(void))complete {
+    if (!complete) return;
+    if (!photoArray.count) {
+        complete();
+    }
+    __block NSInteger count = 0;
+    NSInteger totalCount = photoArray.count;
+    for (IMPhoto *photo in photoArray) {
+        [photo getImageWithResult:^(UIImage * _Nullable image) {
+            photo.image = image;
+            count += 1;
+            if (count >= totalCount) {
+                complete();
+            }
+        }];
+    }
+}
+
+#pragma mark - UIImage → PHAsset
++ (void)getAssetWithImage:(UIImage *)image result:(nonnull void (^)(PHAsset * _Nullable))result {
+    if (!image || !result) return;
+    __block NSString *localIdentifier;
+    [PHPhotoLibrary.sharedPhotoLibrary performChanges:^{
+        localIdentifier = [PHAssetCreationRequest creationRequestForAssetFromImage:image].placeholderForCreatedAsset.localIdentifier;
+    } completionHandler:^(BOOL success, NSError * _Nullable error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (success) {
+                result([self getPhotoArrayWithPhotoIdentifierArray:@[localIdentifier]].firstObject.asset);
+            } else {
+                result(nil);
+            }
+        });
+    }];
+}
+
+#pragma mark - 相片在系统相册中的locationIdentifier集合 → IMPhoto集合
++ (NSArray<IMPhoto *> *)getPhotoArrayWithPhotoIdentifierArray:(NSArray<NSString *> *)photoIdentifierArray {
+    if (!photoIdentifierArray.count) return nil;
+    PHFetchResult *result = [PHAsset fetchAssetsWithLocalIdentifiers:photoIdentifierArray options:nil];
+    NSMutableArray *photoArray = [NSMutableArray arrayWithCapacity:result.count];
+    [result enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [photoArray addObject:[IMPhoto photoWithAsset:obj]];
+    }];
+    return photoArray.copy;
 }
 
 @end

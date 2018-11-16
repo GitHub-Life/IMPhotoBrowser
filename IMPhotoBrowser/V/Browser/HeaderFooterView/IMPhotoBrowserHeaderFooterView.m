@@ -1,23 +1,19 @@
 //
-//  IMPhotoBrowserHeaderView.m
+//  IMPhotoBrowserHeaderFooterView.m
 //  IMPhotoBrowserDemo
 //
 //  Created by 万涛 on 2018/10/15.
 //  Copyright © 2018 iMoon. All rights reserved.
 //
 
-#import "IMPhotoBrowserHeaderView.h"
+#import "IMPhotoBrowserHeaderFooterView.h"
 #import <Masonry.h>
 
-#import "IMPBCloseButton.h"
+#import "IMPBXButton.h"
 
-@interface IMPhotoBrowserHeaderView ()
+static CGFloat const HeaderViewHeight = 44.f;
 
-@property (nonatomic, assign) CGFloat statusBarHeight;
-
-@end
-
-@implementation IMPhotoBrowserHeaderView
+@implementation IMPhotoBrowserHeaderFooterView
 
 - (instancetype)initWithTotalCount:(NSInteger)totalCount {
     if (self = [super init]) {
@@ -29,23 +25,37 @@
 
 - (void)initSettings {
     self.backgroundColor = [UIColor colorWithWhite:0 alpha:0.33f];
-    _statusBarHeight = CGRectGetHeight(UIApplication.sharedApplication.statusBarFrame);
+    
+    UIView *containerView = [[UIView alloc] init];
+    [self addSubview:containerView];
+    __weak typeof(self) weakSelf = self;
+    [containerView mas_makeConstraints:^(MASConstraintMaker *make) {
+        if (@available(iOS 11.0, *)) {
+            make.top.mas_equalTo(weakSelf.mas_safeAreaLayoutGuideTop);
+            make.left.mas_equalTo(weakSelf.mas_safeAreaLayoutGuideLeft);
+            make.right.mas_equalTo(weakSelf.mas_safeAreaLayoutGuideRight);
+            make.bottom.mas_equalTo(weakSelf.mas_safeAreaLayoutGuideBottom);
+        } else {
+            make.edges.mas_equalTo(UIEdgeInsetsZero);
+        }
+        make.height.mas_equalTo(HeaderViewHeight);
+    }];
+    
     _countLabel = [[UILabel alloc] init];
     _countLabel.textColor = UIColor.whiteColor;
     _countLabel.font = [UIFont systemFontOfSize:18.f];
     _countLabel.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:_countLabel];
-    __weak typeof(self) weakSelf = self;
+    [containerView addSubview:_countLabel];
     [_countLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsMake(weakSelf.statusBarHeight, 0, 0, 0));
+        make.edges.mas_equalTo(UIEdgeInsetsZero);
     }];
     [self updateCurrentIndex];
     
-    _closeBtn = [IMPBCloseButton buttonWithType:UIButtonTypeCustom];
+    _closeBtn = [IMPBXButton buttonWithType:UIButtonTypeCustom];
     _closeBtn.tintColor = UIColor.whiteColor;
-    [self addSubview:_closeBtn];
+    [containerView addSubview:_closeBtn];
     [_closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(weakSelf.statusBarHeight);
+        make.top.mas_equalTo(0);
         make.leading.mas_equalTo(0);
         make.bottom.mas_equalTo(0);
         make.width.mas_equalTo(HeaderViewHeight);
@@ -55,11 +65,9 @@
     [_rightBtn setContentEdgeInsets:UIEdgeInsetsMake(0, 16, 0, 16)];
     _rightBtn.titleLabel.font = [UIFont systemFontOfSize:15.f];
     [_rightBtn setTitleColor:UIColor.whiteColor forState:UIControlStateNormal];
-    [_rightBtn setTitleColor:UIColor.grayColor forState:UIControlStateDisabled];
-    [_rightBtn setTitle:@"" forState:UIControlStateDisabled];
-    [self addSubview:_rightBtn];
+    [containerView addSubview:_rightBtn];
     [_rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(weakSelf.statusBarHeight);
+        make.top.mas_equalTo(0);
         make.trailing.mas_equalTo(0);
         make.bottom.mas_equalTo(0);
     }];
@@ -91,10 +99,13 @@
     [targetView addSubview:self];
     __weak typeof(self) weakSelf = self;
     [self mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(0);
+        if (weakSelf.isFooter) {
+            make.bottom.mas_equalTo(0);
+        } else {
+            make.top.mas_equalTo(0);
+        }
         make.leading.mas_equalTo(0);
         make.trailing.mas_equalTo(0);
-        make.height.mas_equalTo(HeaderViewHeight + weakSelf.statusBarHeight);
     }];
 }
 

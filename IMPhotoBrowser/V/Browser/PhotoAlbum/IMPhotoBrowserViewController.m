@@ -10,7 +10,7 @@
 #import <Masonry.h>
 #import "UIViewController+IMAlert.h"
 #import "IMPhotoBrowserCollectionView.h"
-#import "IMPhotoBrowserHeaderView.h"
+#import "IMPhotoBrowserHeaderFooterView.h"
 #import "IMPBSelectedStateButton.h"
 
 @interface IMPhotoBrowserViewController ()
@@ -19,7 +19,7 @@
 
 @property (nonatomic, strong) IMPhotoBrowserCollectionView *collectionView;
 
-@property (nonatomic, strong) IMPhotoBrowserHeaderView *headerView;
+@property (nonatomic, strong) IMPhotoBrowserHeaderFooterView *headerView;
 @property (nonatomic, strong) IMPBSelectedStateButton *selectedStateBtn;
 
 @property (nonatomic, assign) BOOL completed;
@@ -64,9 +64,9 @@
     return _collectionView;
 }
 
-- (IMPhotoBrowserHeaderView *)headerView {
+- (IMPhotoBrowserHeaderFooterView *)headerView {
     if (!_headerView) {
-        _headerView = [[IMPhotoBrowserHeaderView alloc] initWithTotalCount:self.collectionView.photoArray.count];
+        _headerView = [[IMPhotoBrowserHeaderFooterView alloc] initWithTotalCount:self.collectionView.photoArray.count];
         [_headerView.rightBtn addTarget:self action:@selector(complete) forControlEvents:UIControlEventTouchUpInside];
         [_headerView.closeBtn addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -99,7 +99,7 @@
 }
 
 - (void)initView {
-    [self.view setBackgroundColor:UIColor.whiteColor];
+    [self.view setBackgroundColor:UIColor.blackColor];
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(UIEdgeInsetsZero);
@@ -136,14 +136,12 @@
         [UIView animateWithDuration:0.3 animations:^{
             self.headerView.transform = CGAffineTransformIdentity;
             self.selectedStateBtn.transform = CGAffineTransformIdentity;
-            [self.view setBackgroundColor:UIColor.whiteColor];
         }];
     } else if (!show && !self.headerView.hidden) {
         [UIApplication.sharedApplication setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
         [UIView animateWithDuration:0.3 animations:^{
             self.headerView.transform = CGAffineTransformMakeTranslation(0, -CGRectGetHeight(self.headerView.bounds));
             self.selectedStateBtn.transform = CGAffineTransformMakeTranslation(CGRectGetWidth(self.selectedStateBtn.bounds), 0);
-            [self.view setBackgroundColor:UIColor.blackColor];
         } completion:^(BOOL finished) {
             self.headerView.hidden = YES;
             self.selectedStateBtn.hidden = YES;
@@ -165,9 +163,10 @@
         [self alertMessage:[NSString stringWithFormat:@"当前最多选择%d张图片", (int)self.maxCount]];
         return NO;
     }
-    self.headerView.rightBtn.enabled = selectedPhotoCount > 0;
-    if (self.headerView.rightBtn.enabled) {
+    if (selectedPhotoCount > 0) {
         [self.headerView.rightBtn setTitle:[NSString stringWithFormat:@"完成(%d)", (int)selectedPhotoCount] forState:UIControlStateNormal];
+    } else {
+        [self.headerView.rightBtn setTitle:@"完成" forState:UIControlStateNormal];
     }
     return YES;
 }

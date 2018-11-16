@@ -9,22 +9,27 @@
 #import "IMNetworkPhotoBrowserViewController.h"
 #import <Masonry.h>
 #import "IMPhotoBrowserCollectionView.h"
-#import "IMPhotoBrowserHeaderView.h"
+#import "IMPhotoBrowserHeaderFooterView.h"
 #import "IMPhoto.h"
 
 @interface IMNetworkPhotoBrowserViewController ()
 
 @property (nonatomic, strong) IMPhotoBrowserCollectionView *collectionView;
 
-@property (nonatomic, strong) IMPhotoBrowserHeaderView *headerView;
+@property (nonatomic, strong) IMPhotoBrowserHeaderFooterView *footerView;
+
+@property (nonatomic, assign) BOOL noNeedSave;
 
 @end
 
 @implementation IMNetworkPhotoBrowserViewController
 
+#pragma mark - 构造器
 + (void)browserPhotoWithParameter:(IMPhotoBrowserParameter *)parameter {
     NSMutableArray<IMPhoto *> *photoArray = [NSMutableArray array];
-    if (parameter.imageArray.count) {
+    if (parameter.photoArray.count) {
+        photoArray = parameter.photoArray.mutableCopy;
+    } else if (parameter.imageArray.count) {
         for (UIImage *image in parameter.imageArray) {
             [photoArray addObject:[IMPhoto photoWithImage:image]];
         }
@@ -34,20 +39,15 @@
         }
     }
     if (!photoArray.count) return;
-    IMNetworkPhotoBrowserViewController *browserVC = [[IMNetworkPhotoBrowserViewController alloc] initWithPhotoArray:photoArray currentIndex:parameter.currentIndex];
+    IMNetworkPhotoBrowserViewController *browserVC = [[IMNetworkPhotoBrowserViewController alloc] init];
+    browserVC.noNeedSave = parameter.noNeedSave;
+    browserVC.collectionView.photoArray = photoArray.copy;
+    browserVC.footerView.currentIndex = parameter.currentIndex;
+    browserVC.transitioningDelegate = browserVC.animationTransitioning;
+    browserVC.modalPresentationStyle = UIModalPresentationCustom;
     browserVC.animationTransitioning.originalViewBlock = parameter.originalViewBlock;
+    browserVC.animationTransitioning.roundAvatar = parameter.roundAvatar;
     [parameter.callerVC presentViewController:browserVC animated:YES completion:nil];
-}
-
-#pragma mark - 初始化
-- (instancetype)initWithPhotoArray:(NSArray<IMPhoto *> *)photoArray currentIndex:(NSInteger)currentIndex {
-    if (self = [super init]) {
-        self.collectionView.photoArray = photoArray;
-        self.headerView.currentIndex = currentIndex;
-        self.transitioningDelegate = self.animationTransitioning;
-        self.modalPresentationStyle = UIModalPresentationCustom;
-    }
-    return self;
 }
 
 #pragma mark - 懒加载
@@ -68,21 +68,27 @@
         _collectionView = [[IMPhotoBrowserCollectionView alloc] init];
         __weak typeof(self) weakSelf = self;
         [_collectionView setSingleTapEvent:^{
-            [weakSelf coverView:weakSelf.headerView.hidden];
+            [weakSelf coverView:weakSelf.footerView.hidden];
         }];
     }
     return _collectionView;
 }
 
-- (IMPhotoBrowserHeaderView *)headerView {
-    if (!_headerView) {
-        _headerView = [[IMPhotoBrowserHeaderView alloc] initWithTotalCount:self.collectionView.photoArray.count];
-        [_headerView.closeBtn addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
-        [_headerView.rightBtn setTitle:@"保存" forState:UIControlStateNormal];
-        [_headerView.rightBtn setTitle:@"已保存" forState:UIControlStateDisabled];
-        [_headerView.rightBtn addTarget:self action:@selector(savePhoto) forControlEvents:UIControlEventTouchUpInside];
+- (IMPhotoBrowserHeaderFooterView *)footerView {
+    if (!_footerView) {
+        _footerView = [[IMPhotoBrowserHeaderFooterView alloc] initWithTotalCount:self.collectionView.photoArray.count];
+        _footerView.isFooter = YES;
+        [_footerView.closeBtn addTarget:self action:@selector(close) forControlEvents:UIControlEventTouchUpInside];
+        if (_noNeedSave) {
+            _footerView.rightBtn.hidden = YES;
+        } else {
+            _footerView.rightBtn.hidden = NO;
+            [_footerView.rightBtn setTitle:@"保存" forState:UIControlStateNormal];
+            [_footerView.rightBtn setTitle:@"已保存" forState:UIControlStateDisabled];
+            [_footerView.rightBtn addTarget:self action:@selector(savePhoto) forControlEvents:UIControlEventTouchUpInside];
+        }
     }
-    return _headerView;
+    return _footerView;
 }
 
 #pragma mark - viewDidLoad
@@ -92,41 +98,56 @@
 }
 
 - (void)initView {
-    [self.view setBackgroundColor:UIColor.whiteColor];
+    [self.view setBackgroundColor:UIColor.blackColor];
     [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.mas_equalTo(UIEdgeInsetsZero);
     }];
     __weak typeof(self) weakSelf = self;
     [self.collectionView setPageChanged:^(NSInteger page) {
-        weakSelf.headerView.currentIndex = page;
+        weakSelf.footerView.currentIndex = page;
         weakSelf.animationTransitioning.currentIndex = page;
-        weakSelf.headerView.rightBtn.enabled = !weakSelf.collectionView.currentPhoto.saved;
+        weakSelf.footerView.rightBtn.enabled = !weakSelf.collectionView.currentPhoto.saved;
     }];
-    [self.headerView addToTargetView:self.view];
+    [self.footerView addToTargetView:self.view];
+    
+    [self.view addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longGrEvent:)]];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [weakSelf.collectionView setSelectedIndex:weakSelf.headerView.currentIndex];
+        [weakSelf.collectionView setSelectedIndex:weakSelf.footerView.currentIndex];
     });
 }
 
 - (void)coverView:(BOOL)show {
-    if (show && self.headerView.hidden) {
-        self.headerView.hidden = NO;
+    if (show && self.footerView.hidden) {
+        self.footerView.hidden = NO;
         [UIApplication.sharedApplication setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
         [UIView animateWithDuration:0.3 animations:^{
-            self.headerView.transform = CGAffineTransformIdentity;
-            [self.view setBackgroundColor:UIColor.whiteColor];
+            self.footerView.transform = CGAffineTransformIdentity;
         }];
-    } else if (!show && !self.headerView.hidden) {
+    } else if (!show && !self.footerView.hidden) {
         [UIApplication.sharedApplication setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
         [UIView animateWithDuration:0.3 animations:^{
-            self.headerView.transform = CGAffineTransformMakeTranslation(0, -CGRectGetHeight(self.headerView.bounds));
-            [self.view setBackgroundColor:UIColor.blackColor];
+            self.footerView.transform = CGAffineTransformMakeTranslation(0, CGRectGetHeight(self.footerView.bounds));
         } completion:^(BOOL finished) {
-            self.headerView.hidden = YES;
+            self.footerView.hidden = YES;
         }];
     }
+}
+
+- (void)longGrEvent:(UILongPressGestureRecognizer *)longGr {
+    if (!self.footerView.rightBtn.enabled) return;
+    UIAlertControllerStyle preferredStyle = UIAlertControllerStyleAlert;
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        preferredStyle = UIAlertControllerStyleActionSheet;
+    }
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:preferredStyle];
+    __weak typeof(self) weakSelf = self;
+    [alert addAction:[UIAlertAction actionWithTitle:@"保存图片" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [weakSelf savePhoto];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - 保存图片
@@ -134,7 +155,7 @@
     __weak typeof(self) weakSelf = self;
     [self.collectionView saveCurrentPhotoWithFromVC:self result:^(BOOL success) {
         if (success) {
-            weakSelf.headerView.rightBtn.enabled = NO;
+            weakSelf.footerView.rightBtn.enabled = NO;
         }
     }];
 }

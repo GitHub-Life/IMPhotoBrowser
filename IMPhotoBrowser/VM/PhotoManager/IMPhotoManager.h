@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param fromVC 未授权时用于弹出UIAlertController的VC(为nil则不弹出)
  @param grantedBlock 授权回调
  */
-+ (void)checkPhotoLibraryPermissionsWithFromVC:(UIViewController *)fromVC GrantedBlock:(void(^)(void))grantedBlock;
++ (void)checkPhotoLibraryPermissionsWithFromVC:(UIViewController *)fromVC grantedBlock:(void(^)(void))grantedBlock;
 
 /**
  IMPhoto数组 → UIImage数组
@@ -40,6 +40,27 @@ NS_ASSUME_NONNULL_BEGIN
  @param complete 得到UIImage数组回调
  */
 + (void)imageArrayWithPhotoArray:(NSArray<IMPhoto *> *)photoArray complete:(void(^)(NSArray<UIImage *> *imageArray))complete;
+
+/**
+ 从photoArray 元素IMPhoto中的PHAsset获取UIImage，获取成功后赋值到IMPhoto中的image属性
+ @param photoArray IMPhoto 集合
+ @param complete 获取完成
+ */
++ (void)getImagesWithPhotoArray:(NSArray<IMPhoto *> *)photoArray complete:(void(^)(void))complete;
+
+/**
+ UImage → PHAsset
+ @param image UIImage对象
+ @param result PHAsset对象
+ */
++ (void)getAssetWithImage:(UIImage *)image result:(void(^)(PHAsset *__nullable asset))result;
+
+/**
+ 相片在系统相册中的locationIdentifier集合 → IMPhoto集合
+ @param photoIdentifierArray 相片在系统相册中的locationIdentifier集合
+ @return IMPhoto集合
+ */
++ (NSArray<IMPhoto *> *)getPhotoArrayWithPhotoIdentifierArray:(NSArray<NSString *> *)photoIdentifierArray;
 
 @end
 

@@ -14,13 +14,26 @@
 
 static NSString *const CellIdentifier = @"IMPhotoAlbumTableViewCell";
 
-@interface IMPhotoAlbumTableViewController ()
+@interface IMPhotoAlbumTableViewController () <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NSArray<NSDictionary *> *photoAlbumArray;
 
 @end
 
 @implementation IMPhotoAlbumTableViewController
+
+- (UIView *)bgView {
+    if (!_bgView) {
+        _bgView = [[UIView alloc] init];
+        _bgView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.33];
+        _bgView.alpha = 0;
+        _bgView.hidden = YES;
+        UITapGestureRecognizer *tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGrEvent:)];
+        tapGr.delegate = self;
+        [_bgView addGestureRecognizer:tapGr];
+    }
+    return _bgView;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -52,6 +65,18 @@ static NSString *const CellIdentifier = @"IMPhotoAlbumTableViewCell";
     if (_albumSelectedBlock) {
         _albumSelectedBlock(self.photoAlbumArray[indexPath.row][IMPBAlbumKey]);
     }
+}
+
+#pragma mark - 单击事件
+- (void)tapGrEvent:(UITapGestureRecognizer *)tapGr {
+    if (_albumSelectedBlock) {
+        _albumSelectedBlock(nil);
+    }
+}
+
+#pragma mark - UIGestureRecognizer Delegate
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    return [self.tableView indexPathForRowAtPoint:[gestureRecognizer locationInView:self.tableView]] == nil;
 }
 
 @end

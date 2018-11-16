@@ -8,16 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "IMPBStatement.h"
-#import "IMPhotoBrowserAnimationTransitioning.h"
+#import "IMPhotoEditingStyle.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface IMPhotoEditingViewController : UIViewController
 
-- (instancetype)initWithPhoto:(IMPhoto *)photo browseFinish:(IMPBPhotoBrowseFinishEvent)browseFinish;
-
-@property (nonatomic, strong) IMPhotoBrowserAnimationTransitioning *animationTransitioning;
-@property (nonatomic, strong) IMPBAnimationViewBlock originalViewBlock;
+- (instancetype)initWithPhoto:(IMPhoto *)photo editingStype:(IMPhotoEditingStyle)editingStyle selectEvent:(IMPBPhotoSelectEvent)selectEvent;
 
 @end
 

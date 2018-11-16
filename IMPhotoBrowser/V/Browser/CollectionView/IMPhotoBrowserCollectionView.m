@@ -108,7 +108,7 @@ static NSString *CellIdentifier = @"IMPhotoBrowserCollectionViewCell";
 - (void)saveCurrentPhotoWithFromVC:(UIViewController *)fromVC result:(nonnull void (^)(BOOL))result {
     if (self.currentIndex >= 0 && self.currentIndex < self.photoArray.count && self.photoArray[self.currentIndex].image) {
         IMPhoto *photo = self.photoArray[self.currentIndex];
-        [IMPhotoManager checkPhotoLibraryPermissionsWithFromVC:fromVC GrantedBlock:^{
+        [IMPhotoManager checkPhotoLibraryPermissionsWithFromVC:fromVC grantedBlock:^{
             UIImageWriteToSavedPhotosAlbum(self.photoArray[self.currentIndex].image, nil, nil, nil);
             photo.saved = YES;
             if (result) result(YES);

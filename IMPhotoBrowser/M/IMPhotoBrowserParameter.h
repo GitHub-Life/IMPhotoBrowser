@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface IMPhotoBrowserParameter : NSObject
 
+@property (nonatomic, strong) NSArray<IMPhoto *> *photoArray;
+
 @property (nonatomic, strong) NSArray<UIImage *> *imageArray;
 
 @property (nonatomic, strong) NSArray<NSString *> *imageUrlStrArray;
@@ -23,11 +25,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) UIViewController *callerVC;
 
+/** 是否为圆形头像 */
+@property (nonatomic, assign) BOOL roundAvatar;
+
+@property (nonatomic, assign) BOOL noNeedSave;
+
 @property (nonatomic, strong) IMPBAnimationViewBlock originalViewBlock;
 
 + (instancetype)parameterWithImageUrlStrArray:(NSArray<NSString *> *)imageUrlStrArray thumbSuffix:(NSString * _Nullable)thumbSuffix currentIndex:(NSInteger)currentIndex;
 
 + (instancetype)parameterWithImageArray:(NSArray<UIImage *> *)imageArray currentIndex:(NSInteger)currentIndex;
+
++ (instancetype)parameterWithPhotoArray:(NSArray<IMPhoto *> *)photoArray currentIndex:(NSInteger)currentIndex;
 
 @end
 

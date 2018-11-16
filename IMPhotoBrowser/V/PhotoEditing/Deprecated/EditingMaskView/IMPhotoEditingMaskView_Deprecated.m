@@ -1,14 +1,14 @@
 //
-//  IMPhotoEditingMaskView.m
+//  IMPhotoEditingMaskView_Deprecated.m
 //  IMPhotoBrowserDemo
 //
 //  Created by 万涛 on 2018/10/17.
 //  Copyright © 2018 iMoon. All rights reserved.
 //
 
-#import "IMPhotoEditingMaskView.h"
+#import "IMPhotoEditingMaskView_Deprecated.h"
 
-@interface IMPhotoEditingMaskView ()
+@interface IMPhotoEditingMaskView_Deprecated ()
 
 @property (nonatomic, assign) CGRect arrowRect;
 
@@ -16,7 +16,7 @@
 
 @end
 
-@implementation IMPhotoEditingMaskView
+@implementation IMPhotoEditingMaskView_Deprecated
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {

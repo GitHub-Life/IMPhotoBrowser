@@ -15,6 +15,8 @@ typedef void(^IMPhotoAlbumSelectedBlock)(PHAssetCollection * __nullable assetCol
 
 @interface IMPhotoAlbumTableViewController : UITableViewController
 
+@property (nonatomic, strong) UIView *bgView;
+
 @property (nonatomic, strong) IMPhotoAlbumSelectedBlock albumSelectedBlock;
 
 @end

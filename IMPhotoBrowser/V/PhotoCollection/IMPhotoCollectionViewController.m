@@ -100,22 +100,35 @@ static NSString * const PhotoCellIdentifier = @"IMPhotoCollectionViewCell";
     }
     __weak typeof(self) weakSelf = self;
     if (indexPath.row == 0) {
-        [self.cameraman takePhotoWithAllowsEditing:self.allowsEditing fromVC:self.navigationController result:^(UIImage * _Nullable image) {
+//        [self.cameraman takePhotoWithAllowsEditing:self.allowsEditing fromVC:self.navigationController result:^(UIImage * _Nullable image) {
+//            if (image && weakSelf.photoSelectEvent) {
+//                [IMPhotoManager getAssetWithImage:image result:^(PHAsset * _Nullable asset) {
+//                    IMPhoto *photo = [IMPhoto photoWithAsset:asset];
+//                    photo.isTakePhoto = YES;
+//                    weakSelf.photoSelectEvent(photo);
+//                }];
+//            }
+//        }];
+        [self.cameraman takePhotoWithAllowsEditing:NO fromVC:self.navigationController result:^(UIImage * _Nullable image) {
             if (image && weakSelf.photoSelectEvent) {
-                IMPhoto *photo = [IMPhoto photoWithImage:image];
-                photo.isTakePhoto = YES;
-                weakSelf.photoSelectEvent(photo);
+                [IMPhotoManager getAssetWithImage:image result:^(PHAsset * _Nullable asset) {
+                    IMPhoto *photo = [IMPhoto photoWithAsset:asset];
+                    photo.isTakePhoto = YES;
+                    if (weakSelf.allowsEditing) {
+                        IMPhotoEditingViewController *editingVC = [[IMPhotoEditingViewController alloc] initWithPhoto:photo editingStype:IMPhotoEditingStyleCircle selectEvent:self.photoSelectEvent];
+                        [self presentViewController:editingVC animated:YES completion:nil];
+                    } else {
+                        weakSelf.photoSelectEvent(photo);
+                    }
+                }];
             }
         }];
         return;
     }
     
     if (self.allowsEditing) {
-        IMPhotoEditingViewController *previewVC = [[IMPhotoEditingViewController alloc] initWithPhoto:self.photoArray[indexPath.row - 1] browseFinish:self.browseFinish];
-        [previewVC.animationTransitioning setOriginalViewBlock:^UIView *(NSInteger index) {
-            return [weakSelf.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:index + 1 inSection:0]];
-        }];
-        [self presentViewController:previewVC animated:YES completion:nil];
+        IMPhotoEditingViewController *editingVC = [[IMPhotoEditingViewController alloc] initWithPhoto:self.photoArray[indexPath.row - 1] editingStype:IMPhotoEditingStyleCircle selectEvent:self.photoSelectEvent];
+        [self presentViewController:editingVC animated:YES completion:nil];
     } else {
         IMPhotoBrowserViewController *browserVC = [[IMPhotoBrowserViewController alloc] initWithPhotoArray:self.photoArray.copy currentIndex:indexPath.row - 1 maxCount:self.maxCount];
         [browserVC setPhotoSelectEvent:_photoSelectEvent];

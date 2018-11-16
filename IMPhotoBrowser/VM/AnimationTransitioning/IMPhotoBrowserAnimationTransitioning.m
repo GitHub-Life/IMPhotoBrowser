@@ -19,6 +19,10 @@
 
 @implementation IMPhotoBrowserAnimationTransitioning
 
+//- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+//    return 3.f;
+//}
+
 #pragma mark - present 动画
 - (void)presentAnimateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
 //    UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
@@ -43,6 +47,10 @@
     UIView *containerView = [transitionContext containerView];
     
     CGRect originalFrame = [self.originalView convertRect:self.originalView.bounds toView:containerView];
+    if (_roundAvatar) {
+        self.animSnapshoot.layer.cornerRadius = MIN(CGRectGetWidth(originalFrame), CGRectGetHeight(originalFrame)) / 2 / self.animSnapshoot.transform.a;
+        self.animSnapshoot.layer.masksToBounds = YES;
+    }
     [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0.05 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         fromVC.view.alpha = 0.f;
         if (CGRectIsEmpty(originalFrame)) {

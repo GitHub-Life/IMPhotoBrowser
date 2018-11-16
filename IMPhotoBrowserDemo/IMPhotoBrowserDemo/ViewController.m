@@ -33,12 +33,13 @@
                                                [IMPhoto photoWithImageUrlStr:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539768809435&di=3b108163c2b8660f5a0e062127f71fe0&imgtype=0&src=http%3A%2F%2Fwww.tupperware.com.cn%2Ffileserver%2Fproduct%2F201407%2F2014-7-24_15-14-16_979_401_b.jpg"],
                                                [IMPhoto photoWithImageUrlStr:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539768809432&di=71696b391c3f66584302146139a00e26&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F4d086e061d950a7bb88c27ff01d162d9f2d3c954.jpg"],
                                                [IMPhoto photoWithImageUrlStr:@"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539768809432&di=40aadb1697152615de85eccc00d07ab5&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D176e4adf49a98226accc2364e2ebd374%2Fcefc1e178a82b901b63a0b99798da9773812ef82.jpg"]];
-            IMNetworkPhotoBrowserViewController *photoBrowserVC = [[IMNetworkPhotoBrowserViewController alloc] initWithPhotoArray:photoArray currentIndex:0];
-            [self presentViewController:photoBrowserVC animated:YES completion:nil];
+            IMPhotoBrowserParameter *parameter = [IMPhotoBrowserParameter parameterWithPhotoArray:photoArray currentIndex:0];
+            parameter.callerVC = self;
+            [IMNetworkPhotoBrowserViewController browserPhotoWithParameter:parameter];
         } break;
         case 1: {
             __weak typeof(self) weakSelf = self;
-            [IMPhotoManager checkPhotoLibraryPermissionsWithFromVC:self GrantedBlock:^{
+            [IMPhotoManager checkPhotoLibraryPermissionsWithFromVC:self grantedBlock:^{
                 IMPhotoPickerViewController *pickerVC = [[IMPhotoPickerViewController alloc] initWithCutedSelectedEvent:^(IMPhoto *photo) {
                     weakSelf.photoArray = @[photo];
                 }];
@@ -47,7 +48,7 @@
         } break;
         case 2: {
             __weak typeof(self) weakSelf = self;
-            [IMPhotoManager checkPhotoLibraryPermissionsWithFromVC:self GrantedBlock:^{
+            [IMPhotoManager checkPhotoLibraryPermissionsWithFromVC:self grantedBlock:^{
                 IMPhotoPickerViewController *pickerVC = [[IMPhotoPickerViewController alloc] initWithPhotoMaxCount:5 multiSelectedEvent:^(NSArray<IMPhoto *> *photoArray) {
                     weakSelf.photoArray = photoArray;
                     // IMPhoto数组 → UIImage数组

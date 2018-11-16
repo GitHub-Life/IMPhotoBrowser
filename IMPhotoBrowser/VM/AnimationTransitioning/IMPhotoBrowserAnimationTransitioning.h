@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong) UIView *animSnapshoot;
 @property (nonatomic, strong) UIView *animBgView;
+@property (nonatomic, assign) BOOL roundAvatar;
 
 @property (nonatomic, strong) IMPBAnimationViewBlock originalViewBlock;
 
